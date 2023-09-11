@@ -1,6 +1,6 @@
 import { PropTypes } from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import IMAGES, { BackIcon, MicroIcon, SettingIcon } from '../container';
+import IMAGES, { BackIcon, MicroIcon, SettingIcon } from '../../../../container';
 
 export default function MyHeader({
   stats, title, country, amount,

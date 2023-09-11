@@ -1,6 +1,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import GlobalData from './context'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
   description: 'A glimpse of next with SSR and Fast-Refresh',
 }
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
@@ -19,7 +20,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {children}
+      <GlobalData>{children}</GlobalData>
       </body>
     </html>
   )
