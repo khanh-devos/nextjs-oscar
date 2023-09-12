@@ -2,7 +2,7 @@
 
 import { createContext, useEffect, useState } from "react";
 import AllNations from "./components/AllNations";
-import Cities from "./components/Cities";
+import City from "./components/City";
 import Nation from "./components/Nation";
 
 
@@ -35,11 +35,11 @@ export default function MyApp({
    uniqueCountries: Array<uniCountry>
   }) {
   
-  const [showAll, setAll] = useState<Boolean>(true);
-  const [showNation, setNation] = useState<Boolean>(false);
-  const [showCities, setCity] = useState<Boolean>(false);
+  const [showAll, setShowAll] = useState<Boolean>(true);
+  const [showNation, setShowNation] = useState<Boolean>(false);
+  const [showCities, setShowCity] = useState<Boolean>(false);
   const [country, setCountry] = useState<String>('');
-  const [cities, setCities] = useState<Array<String>>(['']);
+  const [city, setCity] = useState<String>('');
 
 
   useEffect(() => {
@@ -50,11 +50,11 @@ export default function MyApp({
     <ContextComponent.Provider value={{
       nobelists, uniqueCountries
     }}>
-    {showAll &&  <AllNations setAll={setAll} setNation={setNation}/>}
+    {showAll &&  <AllNations setShowAll={setShowAll} setShowNation={setShowNation} setCountry={setCountry} />}
     
-    {showNation &&  <Nation country={country} setAll={setAll} setNation={setNation} setCity={setCity} />}
+    {showNation &&  <Nation country={country} setShowAll={setShowAll} setShowNation={setShowNation} setShowCity={setShowCity} setCity={setCity} />}
     
-    {showCities &&  <Cities cities={cities} setNation={setNation} setCity={setCity} />} 
+    {showCities &&  <City city={city} setShowNation={setShowNation} setShowCity={setShowCity} />} 
     </ContextComponent.Provider>
   )
 }

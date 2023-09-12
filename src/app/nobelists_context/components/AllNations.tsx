@@ -1,41 +1,44 @@
 "use client";
 
-import Link from "next/link";
+import IMAGES, { ArrowCircleRightIcon } from "@/container";
 import { Dispatch, SetStateAction, useContext } from "react";
 import { ContextComponent, Nobel, uniCountry } from "../App";
 
 type BoolFunc = () => Boolean
 
 export default function AllNations({
-  setAll, setNation }: {
-  setAll: Dispatch<SetStateAction<Boolean>>,
-  setNation: Dispatch<SetStateAction<Boolean>>
+  setShowAll, setShowNation, setCountry
+  }: {
+  setShowAll: Dispatch<SetStateAction<Boolean>>,
+  setShowNation: Dispatch<SetStateAction<Boolean>>,
+  setCountry: Dispatch<SetStateAction<String>>
   }){
 
   const data: any = useContext(ContextComponent);
   const uniqueCountries: Array<uniCountry> = data?.uniqueCountries;
   
-  const handleClick = () => {
-    
+  const handleClick = (country: String) => {
+    setShowAll(false);
+    setShowNation(true);
+    console.log(country);
+    setCountry(country)
   }
 
   return (
     <div>
         {
-        uniqueCountries.map(({country, cities}, index:Number) => (
-          <div>
-          <button onClick={handleClick} type="button" className="">
-            {/* <ArrowCircleRightIcon /> */}
+        uniqueCountries.map((item, index:Number) => (
+          <button onClick={() => handleClick(`${item.country}`)} type="button" className="w-full border-solid border-2">
+            <ArrowCircleRightIcon />
             
-            {/* <img width={20} src={IMAGES[country.toLowerCase().replace(' ', '')].src} alt="nation map" className="" /> */}
+            <img width={20} src={IMAGES[item.country.toLowerCase().replace(' ', '')].src} alt="nation map" className="" />
             
             <div className="">
-              <h3>{country.toUpperCase()}</h3>
-              <p>{cities.length}</p>
+              <h3>{item.country.toUpperCase()}</h3>
+              <p>{item.cities.length}</p>
             </div>
             
-          </button>
-          </div>))
+          </button>))
         }
 
     </div>
