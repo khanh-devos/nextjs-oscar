@@ -2,6 +2,7 @@
 
 import IMAGES, { ArrowCircleRightIcon } from "@/container";
 import { Dispatch, SetStateAction, useContext } from "react";
+import { v4 } from "uuid";
 import { ContextComponent, Nobel, uniCountry } from "../App";
 
 type BoolFunc = () => Boolean
@@ -26,20 +27,21 @@ export default function AllNations({
 
   return (
     <div>
-        {
-        uniqueCountries.map((item, index:Number) => (
-          <button onClick={() => handleClick(`${item.country}`)} type="button" className="w-full border-solid border-2">
-            <ArrowCircleRightIcon />
-            
-            <img width={20} src={IMAGES[item.country.toLowerCase().replace(' ', '')].src} alt="nation map" className="" />
-            
-            <div className="">
-              <h3>{item.country.toUpperCase()}</h3>
-              <p>{item.cities.length}</p>
-            </div>
-            
-          </button>))
-        }
+
+      {
+      uniqueCountries.map((item, index:Number) => (
+        <button key={v4()} onClick={() => handleClick(`${item.country}`)} type="button" className="w-full border-solid border-2">
+          <ArrowCircleRightIcon />
+          
+          <img width={20} src={IMAGES[item.country.toLowerCase().replace(' ', '')].src} alt="nation map" className="" />
+          
+          <div className="">
+            <h3>{item.country.toUpperCase()}</h3>
+            <p>{item.cities.length}</p>
+          </div>
+          
+        </button>))
+      }
 
     </div>
   )

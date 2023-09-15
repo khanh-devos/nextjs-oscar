@@ -21,7 +21,7 @@ export type Nobel = {
 }
 
 
-export const takeUniqueCountries = (arr: any) => {
+export const takeUniqueCountries = (arr: Array<Nobel>) => {
   const uniqueCountries: Array<uniCountry> = [];
   const compare: Array<string> = [];
 
@@ -41,6 +41,8 @@ export const takeUniqueCountries = (arr: any) => {
 export default async function Nobelist() {
   const nobelists: Array<Nobel> = await getNobelists();
   const uniqueCountries: Array<uniCountry> = takeUniqueCountries(nobelists)
+
+  console.log('running page at sever-side')
 
   return (
     <div>

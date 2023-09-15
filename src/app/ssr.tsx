@@ -27,7 +27,9 @@ function filterData (data: any)  {
 
 export async function getNobelists () {
   try {
+    
     const res = await axios.get(API_NOBEL);
+
     return filterData(res.data);
   } catch (err) {
     return err

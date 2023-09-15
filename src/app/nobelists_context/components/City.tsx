@@ -1,12 +1,12 @@
 import { Dispatch, SetStateAction, useContext } from "react";
+import { v4 } from "uuid";
 import { ContextComponent, Nobel } from "../App";
 
 export default function City({
-  city, setShowCity, setShowNation
+  country, city
   }: {
-    city: String,
-    setShowNation: Dispatch<SetStateAction<Boolean>>,
-    setShowCity: Dispatch<SetStateAction<Boolean>>,
+    country: String,
+    city: String
   }){
 
     const data: any = useContext(ContextComponent);
@@ -17,9 +17,10 @@ export default function City({
     return (
       <div>
         <h2>Nation</h2>
+
         {
           winners.map((item) => (
-            <div className={"w-full border-solid border-2"}>
+            <div key={v4()} className={"w-full border-solid border-2"}>
               <h2>{item.fullname} : {item.city}</h2>
             </div>
           ))

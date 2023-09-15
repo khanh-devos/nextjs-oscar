@@ -3,6 +3,7 @@
 import { createContext, useEffect, useState } from "react";
 import AllNations from "./components/AllNations";
 import City from "./components/City";
+import MyHeader from "./components/Header";
 import Nation from "./components/Nation";
 
 
@@ -25,6 +26,11 @@ export type Nobel = {
 }
 
 
+export type ContextValue = {
+  nobelists: Array<Nobel>,
+  uniqueCountries: Array<uniCountry>
+}
+
 export const ContextComponent = createContext({})
 
 
@@ -38,8 +44,28 @@ export default function MyApp({
   const [showAll, setShowAll] = useState<Boolean>(true);
   const [showNation, setShowNation] = useState<Boolean>(false);
   const [showCities, setShowCity] = useState<Boolean>(false);
-  const [country, setCountry] = useState<String>('');
+  const [country, setCountry] = useState<String>('THE WORLD');
   const [city, setCity] = useState<String>('');
+
+  const count_amount = () : Number => {
+    if (showAll) return nobelists.length
+    else if (showNation) {
+      const current_country = uniqueCountries.find((item) => item.country === country);
+      return current_country?.cities.length || 0
+    }
+    else if (showCities) {
+      const winners = nobelists.filter((item) => item.city === city )
+      return winners.length
+    }
+    else return 0
+  }
+
+  const statsTitle = (): Array<String> => {
+    if (showAll) return ["The World Breakdown", "World Nobelists"]
+    else if (showNation) return ["Nation Breakdown", "Nation Nobelists"]
+    else if (showCities) return ["City Breakdown", "City Nobelists"]
+    else return ["", ""]
+  }
 
 
   useEffect(() => {
@@ -50,11 +76,22 @@ export default function MyApp({
     <ContextComponent.Provider value={{
       nobelists, uniqueCountries
     }}>
+    <MyHeader 
+      stats={statsTitle()[0]} 
+      title={statsTitle()[1]}
+      country={country} 
+      amount={count_amount()}
+      setShowAll={setShowAll}
+      setShowNation={setShowNation}
+      setShowCity={setShowCity}
+      setCountry={setCountry}
+    />
+
     {showAll &&  <AllNations setShowAll={setShowAll} setShowNation={setShowNation} setCountry={setCountry} />}
     
     {showNation &&  <Nation country={country} setShowAll={setShowAll} setShowNation={setShowNation} setShowCity={setShowCity} setCity={setCity} />}
     
-    {showCities &&  <City city={city} setShowNation={setShowNation} setShowCity={setShowCity} />} 
+    {showCities &&  <City country={country} city={city} />} 
     </ContextComponent.Provider>
   )
 }
