@@ -5,18 +5,16 @@ import Link from "next/link";
 export default async function Home() {
 
   return (
-    <div>
-      <h2>Home</h2>
-      <Link href={{
-          pathname:'/nobelists_redux'
-        }}>Nobelists Redux</Link>
-      <br />
-      <Link href={{
+    <div className={"grid gap-10 grid-cols-1 mt-10"}>
+      <Link 
+        className={"text-black h-16 w-1/2 flex flex-rows-1 items-center text-xl"} 
+        href={{
           pathname:'/nobelists_ssr'
         }}>Nobelists SSR</Link>
 
-      <br />
-      <Link href={{
+      <Link 
+        className={"text-black h-16 w-1/2  flex flex-rows-1 items-center text-xl"} 
+        href={{
           pathname:'/nobelists_context'
         }}>Nobelists Context</Link>
     </div>

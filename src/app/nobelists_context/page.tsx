@@ -42,11 +42,9 @@ export default async function Nobelist() {
   const nobelists: Array<Nobel> = await getNobelists();
   const uniqueCountries: Array<uniCountry> = takeUniqueCountries(nobelists)
 
-  console.log('running page at sever-side')
 
   return (
-    <div>
-      <h2>Home</h2>
+    <div className="color-2">
       <MyApp nobelists={nobelists} uniqueCountries={uniqueCountries} />
     </div>
   )

@@ -67,13 +67,9 @@ export default function MyApp({
     else if (showCities) return ["City Breakdown", "City Nobelists"]
     else return ["", ""]
   }
-
-
-  useEffect(() => {
-
-  }, [showAll, showNation, showCities])
   
   return (
+    <div className="color-1 p-0 min-h-screen">
     <ErrorBoundary>
     <ContextComponent.Provider value={{
       nobelists, uniqueCountries
@@ -96,5 +92,6 @@ export default function MyApp({
     {showCities &&  <City country={country} city={city} />} 
     </ContextComponent.Provider>
     </ErrorBoundary>
+    </div>
   )
 }

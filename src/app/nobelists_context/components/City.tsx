@@ -16,12 +16,11 @@ export default function City({
 
     return (
       <div>
-        <h2>Nation</h2>
 
         {
-          winners.map((item) => (
-            <div key={v4()} className={"w-full border-solid border-2"}>
-              <h2>{item.fullname} : {item.city}</h2>
+          winners.map((item, i) => (
+            <div key={v4()} className={"w-full"}>
+              <h2 className={`pl-1 pt-5 pb-5 text-sm ${i%2 === 0 ? 'color-2':'color-3'}`}>{`- ${item.fullname}`}</h2>
             </div>
           ))
         }

@@ -3,21 +3,32 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-  --bodyRPadding: 10rem; 
+  --bodyPadding: 18rem;
+  --color1: #ec4c8b;
+  --color2: #fe5395;
+  --color3: #cf4278;
+ 
+  @media (max-width: 768px) {
+    --bodyPadding: 0.2rem; 
+    
+  }
+  
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  color: white;
 }
 
 body {
-  padding: 1rem var(--bodyRPadding);
-  background: var(--background-end-rgb)
+  font-size: 14px;
+  padding: 0.2rem var(--bodyPadding);
+  background: lavender;
 }
+
+.color-1 { background-color: var(--color1);}
+.color-2 { background-color: var(--color2);}
+.color-3 { background-color: var(--color3);}
+.b-1 {border: 1px solid; }

@@ -1,3 +1,4 @@
+import { ArrowCircleRightIcon } from "@/container";
 import { Dispatch, SetStateAction, useContext } from "react"
 import { v4 } from "uuid";
 import { ContextComponent, Nobel, uniCountry } from "../App";
@@ -25,7 +26,6 @@ export default function Nation({
     const current_country = uniqueCountries.find((item) => item.country === country);
     
     const uniqueCitySet = Array.from(new Set(current_country?.cities))
-
     const uniqueCity = new Map(
       uniqueCitySet.map((item) => {
         return [item, 0]
@@ -43,13 +43,23 @@ export default function Nation({
     }
 
   return (
-    <div>
-      <h2>Nation</h2>
-
+    <div className="grid grid-cols-1">
       {
-        Array.from(uniqueCity.entries()).map(([key, value]) => (
-          <button key={v4()} type="button" onClick={() => handleClick(key)} className="w-full boder-solid border-2" >
-            {key} : {value}
+        Array.from(uniqueCity.entries()).map(([key, value], i) => (
+          <button 
+            key={v4()}
+            type="button"
+            onClick={() => handleClick(key)}
+            className={`text-left p-1 grid grid-cols-2 ${i%2!==0 ? 'color-3': 'color-2'}`}
+          >
+            <strong className="mt-7 mb-7 text-sm">{key.toUpperCase()}</strong>
+            <strong className="mt-7 mb-7 text-sm flex flex-rows-1 justify-end">
+              {`${value} Nobelist${value > 1 ? 's' : ''}`}
+              <div className="ml-5">
+              <ArrowCircleRightIcon />  
+              </div>
+            </strong>
+            
           </button>
         ))
       }
