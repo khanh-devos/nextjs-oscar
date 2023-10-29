@@ -4,7 +4,7 @@ import MyApp from "./App";
 
 
 export type uniCountry = {
-  id: Number,
+  id: number,
   country: String,
   cities: Array<String>
 }
