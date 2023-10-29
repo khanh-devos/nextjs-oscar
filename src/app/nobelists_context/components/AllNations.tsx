@@ -4,7 +4,7 @@ import IMAGES, { ArrowCircleRightIcon } from "@/container";
 import { Dispatch, SetStateAction, useContext } from "react";
 import { v4 } from "uuid";
 import { ContextComponent, Nobel, uniCountry } from "../App";
-
+import Image from 'next/image';
 
 export default function AllNations({
   setShowAll, setShowNation, setCountry
@@ -46,8 +46,10 @@ export default function AllNations({
             <p className="text-sm">{item.cities.length}</p>
           </div>
           
-          <img 
+          <Image 
             src={IMAGES[item.country.toLowerCase().replace(' ', '')].src}
+            width={120}
+            height={120}
             alt="nation map" 
             className="h-24 min-h-24 p-3 m-auto opacity-25"
           />
