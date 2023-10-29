@@ -1,7 +1,6 @@
 "use client";
 
-import { createContext } from "react";
-import Nations from "./Nations";
+import Nations from "./AllNations";
 
 
 export type uniCountry = {
@@ -23,9 +22,6 @@ export type Nobel = {
 }
 
 
-export const ContextComponent = createContext({})
-
-
 export default function MyApp({ 
   nobelists, uniqueCountries
   } : {
@@ -34,10 +30,9 @@ export default function MyApp({
   }) {
   
   return (
-    <ContextComponent.Provider value={{
-      nobelists, uniqueCountries
-    }}>
-      <Nations />
-    </ContextComponent.Provider>
+    <div>
+      
+      <Nations uniqueCountries={uniqueCountries} nobelists={nobelists} />
+    </div>
   )
 }

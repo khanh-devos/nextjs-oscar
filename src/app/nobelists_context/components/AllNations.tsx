@@ -36,7 +36,7 @@ export default function AllNations({
         <button 
           key={v4()} 
           onClick={() => handleClick(`${item.country}`)}
-          className={`relative p-1 h-32 ${darken(i)}`}>
+          className={`relative p-1 h-32 ${darken(i)}`} >
           <div className="absolute top-1 right-1 ">
             <ArrowCircleRightIcon />
           </div>
