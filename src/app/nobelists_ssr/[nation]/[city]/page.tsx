@@ -4,7 +4,7 @@ import { Nobel, uniCountry } from "../../App";
 import MyHeader from "../../Header";
 import { takeUniqueCountries } from "../../page";
 
-export default async function ({
+export default async function City ({
   params
 } : {
   params: {
