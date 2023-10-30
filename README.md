@@ -1,6 +1,6 @@
 
 
-This is a [Nextjs-Oscar](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) shows a list of nobelists based on their countries and cities. The source is from [Laureates](https://api.nobelprize.org/2.1/laureates). 
+This is a [Nextjs-Oscar](https://nextjs-oscar-khanh-git-feature-khanh-devos.vercel.app/nobelists_context) shows a list of nobelists based on their countries and cities. The source is from [Laureates](https://api.nobelprize.org/2.1/laureates). 
 
 Nextjs-Oscas is just a TypeScript prototype from this [website](https://khanh-devos.github.io/re-cap-nobel/).
 
@@ -23,4 +23,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 
 ## Deploy on Vercel 
-- [Demo Link](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme)
+- [Demo Link](https://nextjs-oscar-khanh-git-feature-khanh-devos.vercel.app/nobelists_context)
