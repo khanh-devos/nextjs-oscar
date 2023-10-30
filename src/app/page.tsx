@@ -11,11 +11,11 @@ export default async function Home() {
           pathname:'/nobelists_context'
         }}>Nobelists (data stored in the Context)</Link>
       
-      <Link 
+      {/* <Link 
         className={"text-black h-16 w-1/2 flex flex-rows-1 items-center text-xl"} 
         href={{
           pathname:'/nobelists_ssr'
-        }}>Nobelists SSR</Link>
+        }}>Nobelists SSR</Link> */}
 
     </div>
   )
