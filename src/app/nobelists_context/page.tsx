@@ -21,7 +21,7 @@ export type Nobel = {
 }
 
 
-export const takeUniqueCountries = (arr: Array<Nobel>) => {
+export const TakeUniqueCountries = (arr: Array<Nobel>) => {
   const uniqueCountries: Array<uniCountry> = [];
   const compare: Array<string> = [];
 
@@ -40,7 +40,7 @@ export const takeUniqueCountries = (arr: Array<Nobel>) => {
 
 export default async function Nobelist() {
   const nobelists: Array<Nobel> = await getNobelists();
-  const uniqueCountries: Array<uniCountry> = takeUniqueCountries(nobelists)
+  const uniqueCountries: Array<uniCountry> = TakeUniqueCountries(nobelists)
 
 
   return (

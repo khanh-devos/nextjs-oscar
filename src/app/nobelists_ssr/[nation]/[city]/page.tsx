@@ -2,7 +2,7 @@ import { getNobelists } from "@/app/ssr";
 import { v4 } from "uuid";
 import { Nobel, uniCountry } from "../../App";
 import MyHeader from "../../Header";
-import { takeUniqueCountries } from "../../page";
+import { TakeUniqueCountries } from "../../page";
 
 export default async function City ({
   params
@@ -16,7 +16,7 @@ export default async function City ({
   console.log(city.replace(/%2[C0]/gi, ""));
 
   const nobelists: Array<Nobel> = await getNobelists();
-  const uniqueCountries: Array<uniCountry> = takeUniqueCountries(nobelists)
+  const uniqueCountries: Array<uniCountry> = TakeUniqueCountries(nobelists)
 
   const city_nobelists: Array<Nobel> = nobelists.filter((item) =>
     item.city === city

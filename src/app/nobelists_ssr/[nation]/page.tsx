@@ -2,7 +2,7 @@ import { v4 } from "uuid";
 import { getNobelists } from "@/app/ssr";
 import Link from "next/link";
 import { Nobel, uniCountry } from "../App";
-import { takeUniqueCountries } from "../page";
+import { TakeUniqueCountries } from "../page";
 import MyHeader from "../Header";
 
 
@@ -13,7 +13,7 @@ export default async function Nation({
 }){
   const { nation } = params;
   const nobelists: Array<Nobel> = await getNobelists();
-  const uniqueCountries: Array<uniCountry> = takeUniqueCountries(nobelists)
+  const uniqueCountries: Array<uniCountry> = TakeUniqueCountries(nobelists)
 
   const country: uniCountry | undefined = uniqueCountries.find(item => item.country === nation.replace('%20', ' '))
 
