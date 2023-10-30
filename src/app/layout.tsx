@@ -7,8 +7,9 @@ const inter = Inter({ subsets: ['latin'] })
 
 
 export const metadata: Metadata = {
-  title: 'Next',
-  description: 'A glimpse of next with SSR and Fast-Refresh',
+  title: 'Nobelists',
+  description: 'List of Nobelists',
+  icons: 'https://upload.wikimedia.org/wikipedia/en/e/ed/Nobel_Prize.png'
 }
 
 export default function RootLayout({
