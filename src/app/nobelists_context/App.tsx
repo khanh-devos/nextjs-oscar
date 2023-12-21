@@ -5,7 +5,7 @@ import AllNations from "./components/AllNations";
 import City from "./components/City";
 import MyHeader from "./components/Header";
 import Nation from "./components/Nation";
-import ErrorBoundary from "./ErrorBoundary";
+import ErrorBoundary from "../ErrorBoundary";
 
 
 export type uniCountry = {
@@ -71,6 +71,7 @@ export default function MyApp({
   return (
     <div className="color-1 p-0 min-h-screen">
     <ErrorBoundary>
+
     <ContextComponent.Provider value={{
       nobelists, uniqueCountries
     }}>
@@ -91,6 +92,7 @@ export default function MyApp({
     
     {showCities &&  <City country={country} city={city} />} 
     </ContextComponent.Provider>
+    
     </ErrorBoundary>
     </div>
   )
