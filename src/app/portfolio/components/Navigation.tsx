@@ -1,7 +1,12 @@
 import { MyBtn1, MyNavigation } from "@/app/styledComponents";
+import { Dispatch, SetStateAction } from "react";
 
 
-const Navigation = () => {
+const Navigation = ({
+  setShow
+} : {
+  setShow: Dispatch<SetStateAction<Array<number>>>
+}) => {
   const handleCallback = (e: any): void => {
     const currentID = e.currentTarget.id;
 
@@ -9,9 +14,12 @@ const Navigation = () => {
     Object.values(es).forEach((e) => {
       if (e.getAttribute('id') === currentID) {
         e.classList.add('underline')
+        e.classList.add('font-bold')
+        setShow((state) => state.map((_, index) => index === Number(currentID) ? 1: 0 ));
       }
       else {
         e.classList.remove('underline')
+        e.classList.remove('font-bold')
       }
     })
 
@@ -19,10 +27,10 @@ const Navigation = () => {
 
   return (<div>
     <MyNavigation >
-      <MyBtn1 text="home" toggle="header" id="0" callback={handleCallback} />
-      <MyBtn1 text="projects" toggle="header" id="1" callback={handleCallback} />
-      <MyBtn1 text="about" toggle="header" id="2" callback={handleCallback} />
-      <MyBtn1 text="contact" toggle="header" id="3" callback={handleCallback} />
+      <MyBtn1 text="Home" toggle="header" id="0" callback={handleCallback} />
+      <MyBtn1 text="Projects" toggle="header" id="1" callback={handleCallback} />
+      <MyBtn1 text="About" toggle="header" id="2" callback={handleCallback} />
+      <MyBtn1 text="Contact" toggle="header" id="3" callback={handleCallback} />
       
     </MyNavigation>
   </div>)

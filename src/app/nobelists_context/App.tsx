@@ -69,7 +69,7 @@ export default function MyApp({
   }
   
   return (
-    <div className="color-1 p-0 min-h-screen">
+    <div className="color-1 max-w-3xl min-h-screen" style={{margin: 'auto'}}>
     <ErrorBoundary>
 
     <ContextComponent.Provider value={{
