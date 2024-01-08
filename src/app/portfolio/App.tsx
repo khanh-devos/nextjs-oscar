@@ -17,10 +17,8 @@ const App = () => {
 
 
   useEffect(() => {
-    return () =>{
-      setImage('white');
-      setShow([1, 0, 0]);
-    }
+    setImage('white');
+    setShow([1, 0, 0]);
   }, [])
   
   return (
