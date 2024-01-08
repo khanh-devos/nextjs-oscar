@@ -41,7 +41,7 @@ export const MyParagraph2 = ({text} : {text: string}) => {
   }, [])
 
   
-  return <p className={`text-black ${fontSize}`}>
+  return <p className={`mt-2 mb-2 text-black ${fontSize}`}>
       {text}
   </p>
 }
@@ -408,7 +408,8 @@ export const MyForm = ({
       style={{
         background: `skyblue url(${typo1.src}) no-repeat`,
         backgroundBlendMode: 'multiply',
-        color: 'rgba(0,0,0, 0.5)'
+        color: 'rgba(0,0,0, 0.5)',
+        marginBottom: '5%'
       }}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
@@ -417,6 +418,7 @@ export const MyForm = ({
       font-bold text-xl p-1 px-6 rounded border border-amber-200">
         SEND
       </button>
+
     </form>
   )
 }
