@@ -1,9 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500;700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --bodyPadding: 18rem;
+  --bodyPadding: 1.2rem;
   --color1: #ec4c8b;
   --color2: #fe5395;
   --color3: #cf4278;
@@ -24,12 +26,18 @@
   padding: 0;
   margin: 0;
   color: white;
+  font-family: Rotobo, Raleway, fantasy;
 }
 
 body {
   font-size: 14px;
-  padding: 0.2rem var(--bodyPadding);
+  font-family: Rotobo, Raleway, fantasy;
+  padding: 0;
   background: lavender;
+  /* background: linear-gradient(to right, rgba(255,255,255, 0), white , rgba(255,255,255, 0)); */
+  overflow: auto;
+  min-width: 100%;
+  min-height: 100vh;
 }
 
 .color-1 { background-color: var(--color1);}

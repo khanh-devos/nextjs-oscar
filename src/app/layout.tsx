@@ -1,9 +1,9 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Roboto } from 'next/font/google'
 import GlobalData from './context'
 
-const inter = Inter({ subsets: ['latin'] })
+const roboto = Roboto({ subsets: ['latin'], weight: '400' })
 
 
 export const metadata: Metadata = {
@@ -20,9 +20,9 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={inter.className}>
-      <GlobalData>{children}</GlobalData>
-      </body>
+        <body className={roboto.className}>
+          <GlobalData>{children}</GlobalData>
+        </body>
     </html>
   )
 }

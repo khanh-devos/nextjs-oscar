@@ -42,7 +42,6 @@ export default async function Nobelist() {
   const nobelists: Array<Nobel> = await getNobelists();
   const uniqueCountries: Array<uniCountry> = takeUniqueCountries(nobelists)
 
-
   return (
     <div className="color-2">
       <MyApp nobelists={nobelists} uniqueCountries={uniqueCountries} />

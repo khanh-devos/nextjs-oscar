@@ -5,7 +5,7 @@ import AllNations from "./components/AllNations";
 import City from "./components/City";
 import MyHeader from "./components/Header";
 import Nation from "./components/Nation";
-import ErrorBoundary from "./ErrorBoundary";
+import ErrorBoundary from "../ErrorBoundary";
 
 
 export type uniCountry = {
@@ -69,28 +69,30 @@ export default function MyApp({
   }
   
   return (
-    <div className="color-1 p-0 min-h-screen">
+    <div className="color-1 max-w-3xl min-h-screen" style={{margin: 'auto'}}>
     <ErrorBoundary>
+
     <ContextComponent.Provider value={{
       nobelists, uniqueCountries
     }}>
-    <MyHeader 
-      stats={statsTitle()[0]} 
-      title={statsTitle()[1]}
-      country={country} 
-      amount={count_amount()}
-      setShowAll={setShowAll}
-      setShowNation={setShowNation}
-      setShowCity={setShowCity}
-      setCountry={setCountry}
-    />
+      <MyHeader 
+        stats={statsTitle()[0]} 
+        title={statsTitle()[1]}
+        country={country} 
+        amount={count_amount()}
+        setShowAll={setShowAll}
+        setShowNation={setShowNation}
+        setShowCity={setShowCity}
+        setCountry={setCountry}
+      />
 
-    {showAll &&  <AllNations setShowAll={setShowAll} setShowNation={setShowNation} setCountry={setCountry} />}
-    
-    {showNation &&  <Nation country={country} setShowAll={setShowAll} setShowNation={setShowNation} setShowCity={setShowCity} setCity={setCity} />}
-    
-    {showCities &&  <City country={country} city={city} />} 
+      {showAll &&  <AllNations setShowAll={setShowAll} setShowNation={setShowNation} setCountry={setCountry} />}
+      
+      {showNation &&  <Nation country={country} setShowAll={setShowAll} setShowNation={setShowNation} setShowCity={setShowCity} setCity={setCity} />}
+      
+      {showCities &&  <City country={country} city={city} />} 
     </ContextComponent.Provider>
+    
     </ErrorBoundary>
     </div>
   )
