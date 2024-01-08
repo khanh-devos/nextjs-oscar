@@ -17,10 +17,12 @@ const App = () => {
 
 
   useEffect(() => {
-    if (document.readyState === 'complete') {
-      setImage('white');
-      setTimeout(() => setShow([1, 0, 0]), 1000);
-    }
+
+    setImage('white');
+    setTimeout(() => {
+      setShow([1, 0, 0])
+    }, 2000);
+
   }, [])
   
   return (
