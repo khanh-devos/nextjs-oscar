@@ -2,29 +2,53 @@
 
 import { useEffect, useState } from "react"
 import ErrorBoundary from "../ErrorBoundary"
-import About from "./components/About"
 import Contact from "./components/Contact"
 import Home from "./components/Home"
 import Navigation from "./components/Navigation"
 import Projects from "./components/Projects"
 import typo1 from "../../imgs/portfolio/typo1.png"
+import { MySlidingShow } from "../styledComponents"
+import Footer from "./components/Footer"
 
 const App = () => {
-  const [show, setShow] = useState([1, 0, 0, 0]);
+  const [show, setShow] = useState([0, 0, 0]);
+  const [image, setImage] = useState('grey');
+  
 
+
+  useEffect(() => {
+    return () =>{
+      setImage('white');
+      setShow([1, 0, 0]);
+    }
+  }, [])
+  
   return (
-    <div className="w-full h-screen" style={{background: `url(${typo1.src}) repeat`}}>
+    <div className="w-full h-screen relative" 
+      style={{
+        background: `${image} url(${typo1.src}) repeat`,
+        transitionDuration: '2s',
+        backgroundBlendMode: 'multiply'
+      }}>
     <ErrorBoundary>
       <Navigation setShow={setShow} />
 
-      {Boolean(show[0]) && <Home />}
-      {Boolean(show[1]) && <Projects />}
-      {Boolean(show[2]) && <About />}
-      {Boolean(show[3]) && <Contact />}
+      <MySlidingShow show={show[0]}>
+        {Boolean(show[0]) && <Home />}
+      </MySlidingShow>
 
+      <MySlidingShow show={show[1]}>
+        {Boolean(show[1]) && <Projects />}
+      </MySlidingShow>
+      
+      <MySlidingShow show={show[2]}>
+        {Boolean(show[2]) && <Contact />}
+      </MySlidingShow>
 
+      <Footer />
 
     </ErrorBoundary>
+
     </div>
   )
 }

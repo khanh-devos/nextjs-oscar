@@ -22,7 +22,7 @@ const Projects = () => {
   };
 
 
-  return (<div className="">
+  return (<div className="mt-10">
     <Carousel responsive={responsive} showDots={true}>
       {
         desktopProjects.map((project, i) => {
@@ -33,7 +33,7 @@ const Projects = () => {
               <MirroredImage
                 url={project.img}
                 alt="ebike"
-                height="300"
+                height="400"
                 text={project.description}
                 links={[project.url, project.git]}
               />

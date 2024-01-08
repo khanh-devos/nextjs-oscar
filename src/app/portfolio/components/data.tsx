@@ -32,7 +32,7 @@ export const desktopProjects = [
     title: 'TO DO List',
     img: 'https://www.adobe.com/content/dam/dx-dc/images/landing/discover/uk/pomodoro-technique/AdobeStock_124738800.jpeg',
     tech: ['Webpack'],
-    description: 'List of tasks to do, allow checkbox to update a task state completed, add or remove a task, modify task description, drag and drop a task to exchange position with another task.',
+    description: 'Set tasks to do, check to update a task state completed, modify task description, drag and drop feature, timing (step = 30\') and alarm sound',
     url: 'https://khanh-devos.github.io/TO-DO-LIST/dist/',
     git: 'https://github.com/khanh-devos/TO-DO-LIST',
   },

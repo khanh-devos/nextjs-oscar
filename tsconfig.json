@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/redux/routes/redux/ReduxProvider.js", "src/app/ErrorBoundary.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/**.tsx", ".next/types/**/*.ts", "src/app/redux/routes/redux/ReduxProvider.js", "src/app/ErrorBoundary.tsx"],
   "exclude": ["node_modules"]
 }

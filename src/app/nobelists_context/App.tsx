@@ -75,22 +75,22 @@ export default function MyApp({
     <ContextComponent.Provider value={{
       nobelists, uniqueCountries
     }}>
-    <MyHeader 
-      stats={statsTitle()[0]} 
-      title={statsTitle()[1]}
-      country={country} 
-      amount={count_amount()}
-      setShowAll={setShowAll}
-      setShowNation={setShowNation}
-      setShowCity={setShowCity}
-      setCountry={setCountry}
-    />
+      <MyHeader 
+        stats={statsTitle()[0]} 
+        title={statsTitle()[1]}
+        country={country} 
+        amount={count_amount()}
+        setShowAll={setShowAll}
+        setShowNation={setShowNation}
+        setShowCity={setShowCity}
+        setCountry={setCountry}
+      />
 
-    {showAll &&  <AllNations setShowAll={setShowAll} setShowNation={setShowNation} setCountry={setCountry} />}
-    
-    {showNation &&  <Nation country={country} setShowAll={setShowAll} setShowNation={setShowNation} setShowCity={setShowCity} setCity={setCity} />}
-    
-    {showCities &&  <City country={country} city={city} />} 
+      {showAll &&  <AllNations setShowAll={setShowAll} setShowNation={setShowNation} setCountry={setCountry} />}
+      
+      {showNation &&  <Nation country={country} setShowAll={setShowAll} setShowNation={setShowNation} setShowCity={setShowCity} setCity={setCity} />}
+      
+      {showCities &&  <City country={country} city={city} />} 
     </ContextComponent.Provider>
     
     </ErrorBoundary>

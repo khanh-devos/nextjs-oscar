@@ -60,6 +60,7 @@ export default function MyHeader({
           alt="nation map"
           width={200}
           height={200}
+          priority={true}
         />
         <div className={`grid grid-cols-1 gap-0 content-center p-5 ${styled()}`} >
           <h2 className="text-xl font-bold leading-5">{country.toUpperCase()}</h2>
