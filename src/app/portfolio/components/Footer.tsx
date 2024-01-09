@@ -11,7 +11,7 @@ const Footer = () => {
 
       <MyLink pathname="https://www.linkedin.com/in/khanh-dom/" title="LinkedIn" />
       <MyLink pathname="https://github.com/khanh-devos" title="Git" />
-      <MyLink pathname="https://docs.google.com/document/d/1CR8ElxzM282_SgUW-zgWD7DJJhSqd4wGDB2X2vAw9u4/edit?usp=sharing" title="Resume" />
+      <MyLink pathname="https://docs.google.com/document/d/1CR8ElxzM282_SgUW-zgWD7DJJhSqd4wGDB2X2vAw9u4/edit" title="Resume" />
 
     </div>
   </MyLinearGradient>
