@@ -43,8 +43,10 @@ export default async function Nobelist() {
   const uniqueCountries: Array<uniCountry> = takeUniqueCountries(nobelists)
 
   return (
-    <div className="color-2">
-      <MyApp nobelists={nobelists} uniqueCountries={uniqueCountries} />
+    <div className="">
+      <div className="color-2 max-w-xl min-h-screen m-auto">
+        <MyApp nobelists={nobelists} uniqueCountries={uniqueCountries} />
+      </div>
     </div>
   )
 }
