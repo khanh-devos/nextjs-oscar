@@ -21,16 +21,17 @@ const App = () => {
     setImage('white');
     setTimeout(() => {
       setShow([1, 0, 0])
-    }, 2000);
+    }, 200);
 
   }, [])
   
   return (
-    <div className="w-full h-screen relative" 
+    <div className="w-full relative" 
       style={{
         background: `${image} url(${typo1.src}) repeat`,
         transitionDuration: '2s',
-        backgroundBlendMode: 'multiply'
+        backgroundBlendMode: 'multiply',
+        minHeight: '100vh',
       }}>
     <ErrorBoundary>
       <Navigation setShow={setShow} />

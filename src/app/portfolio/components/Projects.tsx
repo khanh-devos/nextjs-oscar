@@ -1,5 +1,6 @@
 import { MyGridSection, MirroredImage } from "@/app/styledComponents";
 import Link from "next/link";
+import { useState } from "react";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { desktopProjects, projects } from "./data";
@@ -9,6 +10,8 @@ import { desktopProjects, projects } from "./data";
 
 
 const Projects = () => {
+  const [halt, setHalt] = useState(false);
+
 
   const responsive = {
     desktop: {
@@ -29,13 +32,17 @@ const Projects = () => {
         
         return (
           <button onDoubleClick={() => window.open(project.url)}
-            className="relative select-none" key={project.id}>
+            className="relative select-none" key={project.id}
+            onMouseDown={() => setHalt(true)}
+            onMouseUp={() => setHalt(false)}
+            >
               <MirroredImage
                 url={project.img}
                 alt="ebike"
                 height="400"
                 text={project.description}
                 links={[project.url, project.git]}
+                halt={halt}
               />
               
           </button>
