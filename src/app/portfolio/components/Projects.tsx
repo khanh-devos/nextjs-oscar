@@ -1,7 +1,8 @@
 import { MyGridSection, MirroredImage } from "@/app/styledComponents";
 import Link from "next/link";
 import { useState } from "react";
-import Carousel from 'react-multi-carousel';
+// import Carousel from 'react-multi-carousel';
+import Carousel from "../carousel/Carousel";
 import 'react-multi-carousel/lib/styles.css';
 import { desktopProjects, projects } from "./data";
 
@@ -26,7 +27,7 @@ const Projects = () => {
 
 
   return (<div className="mt-10">
-    <Carousel responsive={responsive} showDots={true}>
+    <Carousel responsive={responsive} slidesToSlide={1} removeArrow={true}>
       {
         desktopProjects.map((project, i) => {
         
@@ -34,6 +35,7 @@ const Projects = () => {
           <button onDoubleClick={() => window.open(project.url)}
             className="relative select-none" key={project.id}
             onMouseDown={() => setHalt(true)}
+            // onMouseMove={() => setHalt(true)}
             onMouseUp={() => setHalt(false)}
             >
               <MirroredImage
