@@ -8,8 +8,8 @@ const roboto = Roboto({ subsets: ['latin'], weight: '400' })
 
 
 export const metadata: Metadata = {
-  title: 'Khanh',
-  description: 'List of Nobelists',
+  title: 'Nobelists',
+  description: 'Nextjs Typescript',
   icons: 'https://upload.wikimedia.org/wikipedia/en/e/ed/Nobel_Prize.png'
 }
 

@@ -215,7 +215,7 @@ export const MirroredImage = ({
 
       <div className="text-center w-full mt-16 flex gap-1" draggable={false}>
       <MyLinearGradient stroke="white" color="lightgreen" edgeColor="rgba(0,0,0,0)" margin="0" padding="5">
-        <p className="text-black" >{text}
+        <p className="text-black m-0" >{text}
         {' '}
         <MyLink pathname={links[0]} title="Demo" />
         {" | "}
@@ -287,7 +287,7 @@ export const MyLinearGradient = ({
     
     useEffect(() => {
       if (Number(window.innerWidth) < 768) {
-        setResMargin('5');
+        setResMargin('1');
         setResPadding('5');
         setResStroke('none');
       }

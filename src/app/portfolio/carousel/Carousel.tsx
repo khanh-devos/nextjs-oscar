@@ -37,8 +37,10 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
       deviceType: "",
       domLoaded: false,
       transform: 0,
-      containerWidth: 0
+      containerWidth: 0,
     };
+
+    this.rotate = this.rotate.bind(this);
     this.onResize = this.onResize.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
@@ -117,11 +119,13 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
     this.isAnimationAllowed = true;
     const { slidesToShow } = this.state;
     const { slidesToSlide, infinite } = this.props;
+    
     const nextMaximumSlides =
       this.state.currentSlide + 1 + slidesHavePassed + slidesToShow;
     const nextSlides =
       this.state.currentSlide + slidesHavePassed + slidesToSlide;
     const nextPosition = -(this.state.itemWidth * nextSlides);
+
     if (nextMaximumSlides <= this.state.totalItems) {
       this.setState({
         transform: nextPosition,
@@ -134,6 +138,7 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
       // prevent over sliding;
       const maxSlides = this.state.totalItems - slidesToShow;
       const maxPosition = -(this.state.itemWidth * maxSlides);
+      console.log(maxPosition, 'here')
       this.setState({
         transform: maxPosition,
         currentSlide: maxSlides
@@ -199,12 +204,17 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
     this.lastPosition = e.pageX;
     this.isAnimationAllowed = false;
   }
+  public rotate():void {
+    
+  }
   public handleMouseMove(e: any): void {
     if (this.props.disableDrag) {
       return;
     }
+    
     if (this.onMove) {
       if (this.initialPosition > e.pageX) {
+        // moving to the left.
         const translateXLimit = Math.abs(
           -(
             this.state.itemWidth *
@@ -216,6 +226,7 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
         const isLastSlide =
           this.state.currentSlide ===
           this.state.totalItems - this.state.slidesToShow;
+        
         if (
           Math.abs(nextTranslate) <= translateXLimit ||
           (isLastSlide && this.props.infinite)
