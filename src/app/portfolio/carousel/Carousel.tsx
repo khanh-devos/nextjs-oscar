@@ -38,9 +38,9 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
       domLoaded: false,
       transform: 0,
       containerWidth: 0,
+      resetZero: 0
     };
 
-    this.rotate = this.rotate.bind(this);
     this.onResize = this.onResize.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
@@ -49,6 +49,7 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
     this.handleTouchMove = this.handleTouchMove.bind(this);
     this.handleTouchEnd = this.handleTouchEnd.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
+    this.setOpacity = this.setOpacity.bind(this);
     this.onMove = false;
     this.initialPosition = 0;
     this.lastPosition = 0;
@@ -138,7 +139,7 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
       // prevent over sliding;
       const maxSlides = this.state.totalItems - slidesToShow;
       const maxPosition = -(this.state.itemWidth * maxSlides);
-      console.log(maxPosition, 'here')
+      
       this.setState({
         transform: maxPosition,
         currentSlide: maxSlides
@@ -148,6 +149,7 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
         this.resetAllItems();
       }
     }
+
   }
   public previous(slidesHavePassed = 0): void {
     this.isAnimationAllowed = true;
@@ -194,6 +196,7 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
     this.initialPosition = 0;
     this.lastPosition = 0;
     this.direction = "";
+    
   }
   public handleMouseDown(e: any): void {
     if (this.props.disableDrag) {
@@ -204,17 +207,16 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
     this.lastPosition = e.pageX;
     this.isAnimationAllowed = false;
   }
-  public rotate():void {
-    
-  }
   public handleMouseMove(e: any): void {
     if (this.props.disableDrag) {
       return;
     }
     
+    
     if (this.onMove) {
       if (this.initialPosition > e.pageX) {
         // moving to the left.
+        this.direction = "right";
         const translateXLimit = Math.abs(
           -(
             this.state.itemWidth *
@@ -235,6 +237,7 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
         }
       }
       if (e.pageX > this.initialPosition) {
+        this.direction = "left";
         const nextTranslate =
           this.state.transform + (e.pageX - this.lastPosition);
         const isFirstSlide = this.state.currentSlide === 0;
@@ -242,6 +245,7 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
           this.setState({ transform: nextTranslate });
         }
       }
+
       this.lastPosition = e.pageX;
     }
   }
@@ -262,6 +266,7 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
         this.previous(hasTravel);
       }
       this.resetMoveStatus();
+      
     }
   }
   public handleTouchStart(e: any): void {
@@ -335,6 +340,43 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
       case 39:
         return this.next();
     }
+  }
+  public setOpacity(index: number) {
+    let opacity: string = '';
+    const move = this.state.transform,
+      step = this.state.itemWidth;
+
+    const pivot = this.state.currentSlide;
+    const shownNum = this.state.slidesToShow;
+    const shownIndexLimit = Math.min(pivot + shownNum - 1, this.state.totalItems - 1);
+
+    if (index < pivot || index > shownIndexLimit) {
+      opacity = '0';
+      
+      if (
+        (this.direction !== 'right' && index === pivot - 1) 
+        || (this.direction === 'right' && index === shownIndexLimit + 1)) {
+        opacity = `${Math.abs(((move % step) / step))}`;
+      }
+      
+
+      
+    }
+    else {
+      // Here are all the current showing items.
+      opacity = '1';
+      if (this.direction !== 'right' && index === shownIndexLimit) {
+        const currentPos = step * pivot
+        opacity = `${1 - ((currentPos - Math.abs(move)) % step / step)}`;
+      }
+
+      if (this.direction === 'right' && index === pivot) {
+        
+        opacity = `${1 - Math.abs(move % step) / step}`;
+      }
+      
+    }
+    return opacity;
   }
   public renderLeftArrow(): React.ReactElement<any> {
     const { customLeftArrow } = this.props;
@@ -429,7 +471,9 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
               ? customTransition || defaultTransition
               : "none",
             overflow: shouldRenderOnSSR ? "hidden" : "unset",
-            transform: `translate3d(${this.state.transform}px,0,0)`
+            transform: `translate3d(${this.state.transform}px,0,0)`,
+            perspective: '800px',
+            // perspectiveOrigin: 'left'
           }}
           onMouseMove={this.handleMouseMove}
           onMouseDown={this.handleMouseDown}
@@ -439,18 +483,25 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
           onTouchMove={this.handleTouchMove}
           onTouchEnd={this.handleTouchEnd}
         >
-          {React.Children.toArray(children).map((child, index) => (
+          {React.Children.toArray(children).map((child, index) => {
+            
+            
+            
+
+            return(
             <li
               key={index}
               style={{
                 flex: shouldRenderOnSSR ? `1 0 ${flexBisis}%` : "auto",
-                width: domFullLoaded ? `${itemWidth}px` : "auto"
+                width: domFullLoaded ? `${itemWidth}px` : "auto",
+                opacity: this.setOpacity(index),
+                transitionDuration: '1s',
               }}
               className={itemClassName}
             >
               {child}
             </li>
-          ))}
+          )})}
         </ul>
         {shouldShowArrows && !disableLeftArrow && this.renderLeftArrow()}
         {shouldShowArrows && !disableRightArrow && this.renderRightArrow()}

@@ -39,6 +39,7 @@ interface CarouselInternalState {
   domLoaded: boolean;
   deviceType?: string;
   transform: number;
+  resetZero: number;
 }
 
 export type { CarouselInternalState, CarouselProps, responsiveType };

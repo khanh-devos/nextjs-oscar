@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 // import Carousel from 'react-multi-carousel';
 import Carousel from "../carousel/Carousel";
-import 'react-multi-carousel/lib/styles.css';
+// import 'react-multi-carousel/lib/styles.css';
 import { desktopProjects, projects } from "./data";
 
 
@@ -27,7 +27,7 @@ const Projects = () => {
 
 
   return (<div className="mt-10">
-    <Carousel responsive={responsive} slidesToSlide={1} removeArrow={true}>
+    <Carousel responsive={responsive} itemClassName="carousel-item" slidesToSlide={1} removeArrow={true}>
       {
         desktopProjects.map((project, i) => {
         
