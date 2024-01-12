@@ -6,8 +6,11 @@ import {
   rightArrowStyle,
   leftArrowStyle
 } from "./style";
+
 import { guessWidthFromDeviceType } from "./utils";
 import { CarouselInternalState, CarouselProps } from "./types";
+import { transformSync } from "next/dist/build/swc/index";
+
 
 const defaultTransitionDuration = 300;
 const defaultTransition = "transform 300ms ease-in-out";
@@ -50,6 +53,7 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
     this.handleTouchEnd = this.handleTouchEnd.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
     this.setOpacity = this.setOpacity.bind(this);
+    this.setFlying = this.setFlying.bind(this);
     this.onMove = false;
     this.initialPosition = 0;
     this.lastPosition = 0;
@@ -341,7 +345,7 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
         return this.next();
     }
   }
-  public setOpacity(index: number) {
+  public setOpacity(index: number): string {
     let opacity: string = '';
     const move = this.state.transform,
       step = this.state.itemWidth;
@@ -358,7 +362,7 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
         || (this.direction === 'right' && index === shownIndexLimit + 1)) {
         opacity = `${Math.abs(((move % step) / step))}`;
       }
-      
+
 
       
     }
@@ -366,17 +370,53 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
       // Here are all the current showing items.
       opacity = '1';
       if (this.direction !== 'right' && index === shownIndexLimit) {
-        const currentPos = step * pivot
+        const currentPos = step * pivot;
         opacity = `${1 - ((currentPos - Math.abs(move)) % step / step)}`;
       }
 
       if (this.direction === 'right' && index === pivot) {
-        
-        opacity = `${1 - Math.abs(move % step) / step}`;
+        opacity = `${1 - (Math.abs(move % step) / step)}`;
       }
       
     }
     return opacity;
+
+  }
+  public setFlying(index: number): string {
+    let rotate: string = '', translate: string = '';
+    const move = this.state.transform,
+      step = this.state.itemWidth;
+
+    const pivot = this.state.currentSlide;
+    const shownNum = this.state.slidesToShow;
+    const shownIndexLimit = Math.min(pivot + shownNum - 1, this.state.totalItems - 1);
+
+    if (index < pivot || index > shownIndexLimit) {
+      
+      if (this.direction !== 'right' && index <= pivot - 1 ) {        
+        const currentPos = step * pivot;
+        const change = 1 - ((currentPos - Math.abs(move)) % step / step);
+        rotate = `rotateZ(-${change * 180}deg)`;
+        translate = `translate(0, -${change * step}px)`;
+      }
+
+      
+    }
+    else {
+      // Here are all the current showing items.
+      rotate = 'rotateZ(0deg)';
+      translate = 'translateY(0px)';
+
+      if (this.direction === 'right' && index === pivot) {
+        const change = Math.abs(move % step) / step;
+        rotate = `rotateZ(-${change * 180}deg)`;
+        translate = `translate(0, -${change * step}px)`;
+
+      }
+      
+    }
+
+    return translate + '' + rotate;
   }
   public renderLeftArrow(): React.ReactElement<any> {
     const { customLeftArrow } = this.props;
@@ -486,16 +526,17 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
           {React.Children.toArray(children).map((child, index) => {
             
             
-            
-
             return(
             <li
               key={index}
+              id={`carousel-item-${index}`}
               style={{
                 flex: shouldRenderOnSSR ? `1 0 ${flexBisis}%` : "auto",
                 width: domFullLoaded ? `${itemWidth}px` : "auto",
                 opacity: this.setOpacity(index),
+                transform: this.setFlying(index),
                 transitionDuration: '1s',
+                
               }}
               className={itemClassName}
             >

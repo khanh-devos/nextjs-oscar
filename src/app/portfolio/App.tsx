@@ -7,7 +7,7 @@ import Home from "./components/Home"
 import Navigation from "./components/Navigation"
 import Projects from "./components/Projects"
 import typo1 from "../../imgs/portfolio/typo1.png"
-import { MySlidingShow } from "../styledComponents"
+import { MyParagraph2, MySlidingShow } from "../styledComponents"
 import Footer from "./components/Footer"
 
 const App = () => {
@@ -17,19 +17,17 @@ const App = () => {
 
 
   useEffect(() => {
-
-    setImage('white');
-    setTimeout(() => {
-      setShow([1, 0, 0])
-    }, 200);
-
+    setShow(() => {
+      setImage('lavender');
+      return [1, 0, 0]
+    });
   }, [])
   
   return (
     <div className="w-full relative" 
       style={{
         background: `${image} url(${typo1.src}) repeat`,
-        transitionDuration: '2s',
+        transitionDuration: '1s',
         backgroundBlendMode: 'multiply',
         minHeight: '100vh',
       }}>

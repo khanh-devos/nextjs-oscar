@@ -293,10 +293,6 @@ export const MyLinearGradient = ({
       }
     }, []);
 
-
-
-
-
     return (
     <div
       style={{
@@ -306,7 +302,7 @@ export const MyLinearGradient = ({
         marginRight: `${resMargin}%`,
         padding: `2% ${resPadding}%`,
         borderRadius: '10px',
-        boxShadow: '30px 30px 100px rgba(100,100,150, 0.5)',
+        boxShadow: '30px 30px 60px rgba(100,100,150, .4)',
         width: 'fit-content'
         }}>
         {children}
