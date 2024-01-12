@@ -17,10 +17,8 @@ const App = () => {
 
 
   useEffect(() => {
-    setShow(() => {
-      setImage('lavender');
-      return [1, 0, 0]
-    });
+    setImage('lavender');
+    return setShow([1, 0, 0]);
   }, [])
   
   return (
