@@ -6,9 +6,10 @@ import GlobalData from './context'
 const roboto = Roboto({ subsets: ['latin'], weight: '400' })
 
 
+
 export const metadata: Metadata = {
   title: 'Nobelists',
-  description: 'List of Nobelists',
+  description: 'Nextjs Typescript',
   icons: 'https://upload.wikimedia.org/wikipedia/en/e/ed/Nobel_Prize.png'
 }
 

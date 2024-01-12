@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from "react"
+import React, { ReactElement, useEffect, useState } from "react"
 import Link from 'next/link';
 import Image from "next/image";
 import typo1 from "../imgs/portfolio/typo1.png"
@@ -100,14 +100,47 @@ export const MyGridSection = ({
     </div>)
 }
 
+
+const throttle = (fn: Function, wait: number) => {
+  let inThrottle: boolean = false,
+    lastFn: ReturnType<typeof setTimeout>,
+    lastTime: number;
+
+  return function (this: any) {
+    const context = this,
+      args = arguments;
+    
+    if (!inThrottle) {
+      fn.apply(context, args);
+      lastTime = Date.now();
+      console.log(inThrottle);
+      inThrottle = true;
+
+
+    } else {
+      // clearTimeout(lastFn);
+      
+      if (Date.now() - lastTime >= wait) {
+        // fn.apply(context, args);
+        lastTime = Date.now();
+        console.log(inThrottle);
+      }
+      
+      // }, Math.max(wait - (Date.now() - lastTime), 0));
+    }
+  };
+};
+
+
 export const MirroredImage = ({
-    url, alt, height, text, links
+    url, alt, height, text, links, halt
 }:{
     url: string,
     alt: string,
     height: string,
     text: string,
-    links: Array<string>
+    links: Array<string>,
+    halt?: boolean
 }) => {
 
     const [mousePos, setMousePos] = useState([0,0]);
@@ -116,21 +149,32 @@ export const MirroredImage = ({
     const maxAngleX = -10;
     const maxAngleY = 10;
     
-    const showMousePos = (e: any) => {    
-        const stumbling = [
-            ((Number(e.clientX) - center[0]) / center[0]) * maxAngleX, 
-            ((Number(e.clientY) - center[1]) / center[1]) * maxAngleY
-        ]
-        
-        setMousePos(stumbling);
-        
+    const showMousePos = (e: any) => {
+      const stumbling = [
+          ((Number(e.clientX) - center[0]) / center[0]) * maxAngleX, 
+          ((Number(e.clientY) - center[1]) / center[1]) * maxAngleY
+      ]
+      setMousePos(stumbling);
     };
 
-
+    const throttleShowMousePos = throttle(showMousePos, 3000);
     
-    
+    const mirrorImages: Object = document.getElementsByClassName('mirror-images');
     if (document.readyState === 'complete') {
-      document.querySelector('body')?.addEventListener('mousemove', showMousePos)
+      if (!halt) {
+        document.querySelector('body')?.addEventListener('mousemove', showMousePos);
+        
+        Object.values(mirrorImages).forEach((img: any) => {
+          img.style.transform = `rotateX(${mousePos[1]}deg) rotateY(${mousePos[0]}deg)`;
+        })
+      }
+      else {
+        document.querySelector('body')?.removeEventListener('mousemove', showMousePos);
+        
+        Object.values(mirrorImages).forEach((img: any) => {
+          img.style.transform = 'none';
+        })
+      }
     } 
     
     const responsiveMargin = Number(window.innerWidth) > 768 ? '70px': '40px';
@@ -141,15 +185,16 @@ export const MirroredImage = ({
         style={{
             margin: responsiveMargin,
             perspective: '1000px'
-        }} 
-        draggable={false}>
-      <div style={{position: 'relative', 
-        width:'100%', 
-        height: responsiveHeight, 
-        boxShadow: '30px 30px 100px rgba(100,100,150, 0.9)',
-        borderRadius: '20%',
-        outline: 'auto whitesmoke',
-        transform: `rotateX(${mousePos[1]}deg) rotateY(${mousePos[0]}deg)`,
+        }}
+        draggable={false}
+    >
+      <div className="mirror-images" 
+        style={{position: 'relative', 
+          width:'100%', 
+          height: responsiveHeight, 
+          boxShadow: '30px 30px 100px rgba(100,100,150, 0.9)',
+          borderRadius: '20%',
+          outline: 'auto whitesmoke',
         }}
         
 
@@ -170,7 +215,7 @@ export const MirroredImage = ({
 
       <div className="text-center w-full mt-16 flex gap-1" draggable={false}>
       <MyLinearGradient stroke="white" color="lightgreen" edgeColor="rgba(0,0,0,0)" margin="0" padding="5">
-        <p className="text-black" >{text}
+        <p className="text-black m-0" >{text}
         {' '}
         <MyLink pathname={links[0]} title="Demo" />
         {" | "}
@@ -242,15 +287,11 @@ export const MyLinearGradient = ({
     
     useEffect(() => {
       if (Number(window.innerWidth) < 768) {
-        setResMargin('5');
+        setResMargin('1');
         setResPadding('5');
         setResStroke('none');
       }
     }, []);
-
-
-
-
 
     return (
     <div
@@ -261,7 +302,7 @@ export const MyLinearGradient = ({
         marginRight: `${resMargin}%`,
         padding: `2% ${resPadding}%`,
         borderRadius: '10px',
-        boxShadow: '30px 30px 100px rgba(100,100,150, 0.5)',
+        boxShadow: '30px 30px 60px rgba(100,100,150, .4)',
         width: 'fit-content'
         }}>
         {children}
