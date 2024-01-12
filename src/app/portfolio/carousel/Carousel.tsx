@@ -535,7 +535,7 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
                 width: domFullLoaded ? `${itemWidth}px` : "auto",
                 opacity: this.setOpacity(index),
                 transform: this.setFlying(index),
-                transitionDuration: '1s',
+                transitionDuration: '0.5s',
                 
               }}
               className={itemClassName}
