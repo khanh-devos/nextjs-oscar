@@ -3,6 +3,7 @@
 import React, { ReactElement, useEffect, useState } from "react"
 import Link from 'next/link';
 import Image from "next/image";
+import { useForm, ValidationError } from "@formspree/react";
 import typo1 from "../imgs/portfolio/typo1.png"
 
 export const MyHeader1 = ({text} : {text: string}) => {
@@ -303,7 +304,8 @@ export const MyLinearGradient = ({
         padding: `2% ${resPadding}%`,
         borderRadius: '10px',
         boxShadow: '30px 30px 60px rgba(100,100,150, .4)',
-        width: 'fit-content'
+        width: 'fit-content',
+        minWidth: '60%',
         }}>
         {children}
     </div>)
@@ -368,6 +370,9 @@ export const MyForm = ({
   children: React.ReactNode
 }) => {
 
+  const [state, handleSubmit] = useForm("mqkonqbq");
+  const [back, setBack] = useState(true);
+
   const notice = (msg:string) => {
     const p = document.createElement('p');
     p.style.color = 'red';
@@ -379,7 +384,8 @@ export const MyForm = ({
 
   }
 
-  const handleSubmit = (e: any) => {
+  const myHandleSubmit = (e: any) => {
+    
     const form = e.target;
 
     Object.values(form).forEach((input: any) => {
@@ -411,9 +417,13 @@ export const MyForm = ({
         e.preventDefault();
         return
       }
-
       
+
     })
+
+
+    handleSubmit(e);
+    
 
   }
 
@@ -433,35 +443,68 @@ export const MyForm = ({
     e.target.style.backgroundBlendMode = 'multiply';
   }
 
+  if (state.succeeded && back) {
+    return <div className="text-center">
+      <MyParagraph2 text="Your message succesfully sent." />;
+      <MyFormBtn callback={() => setBack(false)} text="BACK" />
+    </div>
+  }
+
   return (
     <form
       style={{textAlign: 'center', position: 'relative'}}
-      action="https://formspree.io/f/mqkonqbq" 
-      method="POST"
-      onSubmit={handleSubmit}
+      onSubmit={myHandleSubmit}
     >
       {children}
       
       <br/>
       <br/>
 
-      <button name="button"
-      style={{
-        background: `skyblue url(${typo1.src}) no-repeat`,
-        backgroundBlendMode: 'multiply',
-        color: 'rgba(0,0,0, 0.5)',
-        marginBottom: '5%'
-      }}
-      onMouseOver={handleMouseOver}
-      onMouseOut={handleMouseOut}
-      onMouseDown={handleMouseDown}
-      className="
-      font-bold text-xl p-1 px-6 rounded border border-amber-200">
-        SEND
-      </button>
+      <MyFormBtn text="SEND" />
 
     </form>
   )
+}
+
+export const MyFormBtn = ({
+  text,
+  callback
+}:{
+  text:string,
+  callback?: Function
+}) => {
+  const handleMouseOver = (e: any) => {
+    e.target.style.background = `orange url(${typo1.src}) no-repeat`;
+    e.target.style.backgroundBlendMode = 'multiply';
+  }
+
+  const handleMouseOut = (e: any) => {
+    e.target.style.background = `skyblue url(${typo1.src}) no-repeat`;
+    e.target.style.backgroundBlendMode = 'multiply';
+  }
+
+  const handleMouseDown = (e: any) => {
+    e.target.style.background = `#ff6b00 url(${typo1.src}) no-repeat`;
+    e.target.style.backgroundBlendMode = 'multiply';
+  }
+
+  return <button name="button"
+  style={{
+    background: `skyblue url(${typo1.src}) no-repeat`,
+    backgroundBlendMode: 'multiply',
+    color: 'rgba(0,0,0, 0.5)',
+    marginBottom: '5%'
+  }}
+  onMouseOver={handleMouseOver}
+  onMouseOut={handleMouseOut}
+  onMouseDown={(e) => {
+    handleMouseDown(e);
+    if (callback) callback();
+  }}
+  className="
+  font-bold text-xl p-1 px-6 rounded border border-amber-200">
+    {text}
+  </button>
 }
 
 export const MySlidingShow = ({
