@@ -16,7 +16,7 @@ const Projects = () => {
 
   const responsive = {
     desktop: {
-      breakpoint: { max: 3000, min: 1024 },
+      breakpoint: { max: 3000, min: 768 },
       items: 2
     },
     mobile: {

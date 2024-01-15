@@ -54,6 +54,7 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
     this.onKeyUp = this.onKeyUp.bind(this);
     this.setOpacity = this.setOpacity.bind(this);
     this.setFlying = this.setFlying.bind(this);
+    this.setSlideStep = this.setSlideStep.bind(this); 
     this.onMove = false;
     this.initialPosition = 0;
     this.lastPosition = 0;
@@ -237,7 +238,9 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
           Math.abs(nextTranslate) <= translateXLimit ||
           (isLastSlide && this.props.infinite)
         ) {
+          
           this.setState({ transform: nextTranslate });
+          
         }
       }
       if (e.pageX > this.initialPosition) {
@@ -300,8 +303,12 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
         const isLastSlide =
           this.state.currentSlide ===
           this.state.totalItems - this.state.slidesToShow;
-        if (Math.abs(nextTranslate) <= translateXLimit || (isLastSlide && this.props.infinite)) {
+        
+        if (Math.abs(nextTranslate) <= translateXLimit || 
+        (isLastSlide && this.props.infinite)) {
+          
           this.setState({ transform: nextTranslate });
+          
         }
       }
       if (e.touches[0].screenX > this.initialPosition) {
@@ -309,8 +316,11 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
         const nextTranslate =
           this.state.transform + (e.touches[0].screenX - this.lastPosition);
         const isFirstSlide = this.state.currentSlide === 0;
+        
         if (nextTranslate <= 0 || (isFirstSlide && this.props.infinite)) {
+          
           this.setState({ transform: nextTranslate });
+          
         }
       }
       this.lastPosition = e.touches[0].screenX;
@@ -375,7 +385,10 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
       }
 
       if (this.direction === 'right' && index === pivot) {
-        opacity = `${1 - (Math.abs(move % step) / step)}`;
+        const isUnChanged = this.state.totalItems - shownNum === pivot
+        // 2 => this.state.totalItems - 2 === pivot
+        // 1 => this.state.totalItems - 1 === pivot
+        if (!isUnChanged) opacity = `${1 - (Math.abs(move % step) / step)}`;
       }
       
     }
@@ -409,14 +422,30 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
 
       if (this.direction === 'right' && index === pivot) {
         const change = Math.abs(move % step) / step;
-        rotate = `rotateZ(-${change * 180}deg)`;
-        translate = `translate(0, -${change * step}px)`;
+        const isUnChanged = this.state.totalItems - shownNum === pivot
+
+        if (!isUnChanged) {
+          rotate = `rotateZ(-${change * 180}deg)`;
+          translate = `translate(0, -${change * step}px)`;
+        }
+
 
       }
       
     }
 
     return translate + '' + rotate;
+  }
+  public setSlideStep(e: any) {
+    const nextTranslate =
+          this.state.transform - (this.lastPosition - e.pageX);
+    if (Math.abs(this.lastPosition - e.pageX) > 5) {
+      this.setState({ transform: nextTranslate });
+    }
+
+    if (this.initialPosition - e.pageX > 150) {
+      this.next(0);
+    }
   }
   public renderLeftArrow(): React.ReactElement<any> {
     const { customLeftArrow } = this.props;
