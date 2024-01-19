@@ -579,9 +579,8 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
     this.isAnimationAllowed = true;
     this.props.shouldResetAutoplay && this.resetAutoplayInterval();
 
-    // set initial currentSlide before auto playing.
+    // prevent setting initial currentSlide once auto playing is running.
     if (this.props.autoPlay && this.isFirstTime && this.props.infinite) {
-      this.setInitialCurrentSlide();
       this.isFirstTime = false;
     }
 
