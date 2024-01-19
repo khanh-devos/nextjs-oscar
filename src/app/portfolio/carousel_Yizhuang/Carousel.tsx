@@ -206,6 +206,7 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
       window.addEventListener("keyup", this.onKeyUp as React.EventHandler<any>);
     }
     if (this.props.autoPlay) {
+
       this.autoPlay = setInterval(this.next, this.props.autoPlaySpeed);
     }
   }
@@ -575,9 +576,15 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
       beforeChange(nextSlides, this.getState());
     }
 
-
     this.isAnimationAllowed = true;
     this.props.shouldResetAutoplay && this.resetAutoplayInterval();
+
+    // set initial currentSlide before auto playing.
+    if (this.props.autoPlay && this.isFirstTime && this.props.infinite) {
+      this.setInitialCurrentSlide();
+      this.isFirstTime = false;
+    }
+
     this.setState(
       {
         transform: nextPosition,
