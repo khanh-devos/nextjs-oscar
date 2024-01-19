@@ -27,11 +27,13 @@ const Projects = () => {
 
   return (<div className="mt-10">
     <Carousel 
-      transitionDuration={400} 
+      transitionDuration={400}
       customTransition="transform 400ms ease-in-out" 
       infinite={true} 
       fading={true}
       flying={true} 
+      autoPlay={true}
+      pauseOnHover={true}
       responsive={responsive}
       arrows={false}
     >
