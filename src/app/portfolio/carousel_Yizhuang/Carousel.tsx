@@ -477,7 +477,7 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
 
     let opacity: string = '';
     const items = this.listRef.current?.children,
-      pivot = this.state.currentSlide,
+      pivot = nextSlide,
       shownNum = this.state.slidesToShow,
       shownIndexLimit = Math.min(pivot + shownNum - 1, this.state.totalItems - 1);
 
@@ -514,7 +514,7 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
 
     let transform: string = '';
     const items = this.listRef.current?.children,
-      pivot = nextSlide || this.state.currentSlide,
+      pivot = nextSlide,
       shownNum = this.state.slidesToShow,
       shownIndexLimit = Math.min(pivot + shownNum - 1, this.state.totalItems - 1);
     
