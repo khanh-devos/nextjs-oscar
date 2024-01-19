@@ -4,7 +4,8 @@ const Contact = () => {
 
   return (
   <div className="mt-20">
-    <MyLinearGradient stroke="lavender" color="white" edgeColor="rgba(0,0,0,0)" margin="20" padding="3" >
+    <MyLinearGradient stroke="lavender" color="white" 
+      edgeColor="rgba(0,0,0,0)" padding="3" >
       <MyHeader2 text="CONTACT" />
 
       <MyForm>

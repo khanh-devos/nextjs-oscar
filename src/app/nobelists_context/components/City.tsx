@@ -1,13 +1,12 @@
-import { Dispatch, SetStateAction, useContext } from "react";
+import { useContext } from "react";
 import { v4 } from "uuid";
 import { ContextComponent, Nobel } from "../App";
 
 export default function City({
-  country, city
-  }: {
-    country: String,
-    city: String
-  }){
+  city
+}:{
+  city: String
+}){
 
     const data: any = useContext(ContextComponent);
     const nobelists: Array<Nobel> = data?.nobelists;

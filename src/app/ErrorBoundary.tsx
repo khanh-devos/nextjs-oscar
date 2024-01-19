@@ -6,10 +6,6 @@ interface Props {
   children?: React.ReactNode;
 }
 
-interface State {
-  hasError: boolean;
-}
-
 class ErrorBoundary extends React.Component<any, any> {
   constructor(props: Props) {
     super(props)
@@ -19,7 +15,7 @@ class ErrorBoundary extends React.Component<any, any> {
   }
   static getDerivedStateFromError(error: Error) {
     // Update state so the next render will show the fallback UI
- 
+    console.warn(error);
     return { hasError: true }
   }
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {

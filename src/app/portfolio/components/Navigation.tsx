@@ -1,4 +1,4 @@
-import { MyBtn1, MyLinearGradient, MyNavigation } from "@/app/styledComponents";
+import { MyBtn1, MyLinearGradient } from "@/app/styledComponents";
 import { Dispatch, SetStateAction } from "react";
 
 
@@ -28,7 +28,7 @@ const Navigation = ({
   return (
   <div className="flex justify-end">
     <div className="fixed top-4 right-4 z-10">
-      <MyLinearGradient stroke="lavender" color="rgba(0,0,0,0)" edgeColor="white" margin="0" padding="0" >
+      <MyLinearGradient stroke="lavender" color="rgba(0,0,0,0)" edgeColor="white" padding="0" >
         <div className="text-black flex flex-row gap-2 px-1">
           <MyBtn1 text="Home" toggle="header" id="0" callback={handleCallback} />
           <MyBtn1 text="Projects" toggle="header" id="1" callback={handleCallback} />

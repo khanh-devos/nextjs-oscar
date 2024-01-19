@@ -1,20 +1,12 @@
 import { ArrowCircleRightIcon } from "@/container";
 import { Dispatch, SetStateAction, useContext } from "react"
 import { v4 } from "uuid";
-import { ContextComponent, Nobel, uniCountry } from "../App";
-import MyHeader from "./Header";
-
-interface Dictionary<T> {
-  [key: string]: T;
-}
-
-type Cities = Record<string, Number>;
+import { ContextComponent, uniCountry } from "../App";
 
 export default function Nation({
-  country, setShowAll, setShowNation, setShowCity, setCity
+  country, setShowNation, setShowCity, setCity
   }:{
     country: String,
-    setShowAll: Dispatch<SetStateAction<Boolean>>,
     setShowNation: Dispatch<SetStateAction<Boolean>>,
     setShowCity: Dispatch<SetStateAction<Boolean>>,
     setCity: Dispatch<SetStateAction<String>>,

@@ -6,7 +6,8 @@ const Footer = () => {
   <div 
     className="fixed bottom-6 right-4"
   >
-  <MyLinearGradient stroke="lavender" color="rgba(0,0,0,0)" edgeColor="white" margin="0" padding="0"  >
+  <MyLinearGradient stroke="lavender" color="rgba(0,0,0,0)" 
+  edgeColor="white" padding="0">
     <div className="rounded flex gap-2 px-1">
 
       <MyLink pathname="https://www.linkedin.com/in/khanh-dom/" title="LinkedIn" />

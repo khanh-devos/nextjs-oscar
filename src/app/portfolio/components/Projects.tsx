@@ -1,10 +1,9 @@
-import { MyGridSection, MirroredImage } from "@/app/styledComponents";
-import Link from "next/link";
+import { MirroredImage } from "@/app/styledComponents";
 import { useState } from "react";
 // import Carousel from 'react-multi-carousel';
-import Carousel from "../carousel/Carousel";
+import Carousel from "../carousel_Yizhuang/Carousel";
 // import 'react-multi-carousel/lib/styles.css';
-import { desktopProjects, projects } from "./data";
+import { desktopProjects } from "./data";
 
 
 
@@ -27,16 +26,27 @@ const Projects = () => {
 
 
   return (<div className="mt-10">
-    <Carousel responsive={responsive} itemClassName="carousel-item" slidesToSlide={1} removeArrow={true}>
+    <Carousel 
+      transitionDuration={400} 
+      customTransition="transform 400ms ease-in-out" 
+      infinite={true} 
+      fading={true}
+      flying={true} 
+      responsive={responsive}
+      arrows={false}
+    >
       {
-        desktopProjects.map((project, i) => {
+        desktopProjects.slice(0, 4).map((project) => {
         
         return (
           <button onDoubleClick={() => window.open(project.url)}
             className="relative select-none" key={project.id}
             onMouseDown={() => setHalt(true)}
-            // onMouseMove={() => setHalt(true)}
             onMouseUp={() => setHalt(false)}
+            style={{
+              minWidth: '100%',
+              padding: '0 2%'
+            }}
             >
               <MirroredImage
                 url={project.img}
