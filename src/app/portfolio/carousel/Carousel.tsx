@@ -9,7 +9,6 @@ import {
 
 import { guessWidthFromDeviceType } from "./utils";
 import { CarouselInternalState, CarouselProps } from "./types";
-import { transformSync } from "next/dist/build/swc/index";
 
 
 const defaultTransitionDuration = 300;
@@ -488,9 +487,6 @@ class Container extends React.Component<CarouselProps, CarouselInternalState> {
       forSSR,
       children,
       slidesToSlide,
-      customLeftArrow,
-      customRightArrow,
-      disableSwipeOnMobile,
       removeArrow,
       removeArrowOnDeviceType,
       infinite,

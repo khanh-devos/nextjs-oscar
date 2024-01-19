@@ -1,3 +1,4 @@
+import { ReactElement, ReactNode } from "react";
 
 
 interface responsiveType {
@@ -16,9 +17,9 @@ interface CarouselProps {
   removeArrow?: boolean;
   disableSwipeOnMobile?: boolean;
   removeArrowOnDeviceType?: string | Array<string>;
-  children: React.ReactNode | null;
-  customLeftArrow?: React.ReactElement<any> | null;
-  customRightArrow?: React.ReactElement<any> | null;
+  children: ReactNode | null;
+  customLeftArrow?: ReactElement<any> | null;
+  customRightArrow?: ReactElement<any> | null;
   infinite?: boolean;
   contentClassName?: string;
   itemClassName?:string;

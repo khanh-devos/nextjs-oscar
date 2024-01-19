@@ -16,7 +16,7 @@ export default function AllNations({
 
   const data: any = useContext(ContextComponent);
   const uniqueCountries: Array<uniCountry> = data?.uniqueCountries;
-  const nobelists: Array<Nobel> = data?.nobelists;
+
   
   const handleClick = (country: String) => {
     setShowAll(false);

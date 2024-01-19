@@ -90,9 +90,9 @@ export default function MyApp({
 
       {showAll &&  <AllNations setShowAll={setShowAll} setShowNation={setShowNation} setCountry={setCountry} />}
       
-      {showNation &&  <Nation country={country} setShowAll={setShowAll} setShowNation={setShowNation} setShowCity={setShowCity} setCity={setCity} />}
+      {showNation &&  <Nation country={country} setShowNation={setShowNation} setShowCity={setShowCity} setCity={setCity} />}
       
-      {showCities &&  <City country={country} city={city} />} 
+      {showCities &&  <City city={city} />} 
     </ContextComponent.Provider>
     
     </ErrorBoundary>
