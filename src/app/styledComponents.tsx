@@ -1,9 +1,9 @@
 'use client'
 
-import React, { ReactElement, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import Link from 'next/link';
 import Image from "next/image";
-import { useForm, ValidationError } from "@formspree/react";
+import { useForm } from "@formspree/react";
 import typo1 from "../imgs/portfolio/typo1.png"
 
 export const MyHeader1 = ({text} : {text: string}) => {
@@ -101,131 +101,102 @@ export const MyGridSection = ({
     </div>)
 }
 
-
-const throttle = (fn: Function, wait: number) => {
-  let inThrottle: boolean = false,
-    lastFn: ReturnType<typeof setTimeout>,
-    lastTime: number;
-
-  return function (this: any) {
-    const context = this,
-      args = arguments;
-    
-    if (!inThrottle) {
-      fn.apply(context, args);
-      lastTime = Date.now();
-      inThrottle = true;
-
-
-    } else {
-      // clearTimeout(lastFn);
-      
-      if (Date.now() - lastTime >= wait) {
-        // fn.apply(context, args);
-        lastTime = Date.now();
-      }
-      
-      // }, Math.max(wait - (Date.now() - lastTime), 0));
-    }
-  };
-};
-
-
 export const MirroredImage = ({
-    url, alt, height, text, links, halt
+  url, alt, height, text, links, halt
 }:{
-    url: string,
-    alt: string,
-    height: string,
-    text: string,
-    links: Array<string>,
-    halt?: boolean
+  url: string,
+  alt: string,
+  height: string,
+  text: string,
+  links: Array<string>,
+  halt?: boolean
 }) => {
 
-    const [mousePos, setMousePos] = useState([0,0]);
-    
-    const center = [Number(window.innerWidth)/2, Number(window.innerHeight)/2];
-    const maxAngleX = -10;
-    const maxAngleY = 10;
-    
-    const showMousePos = (e: any) => {
-      const stumbling = [
-          ((Number(e.clientX) - center[0]) / center[0]) * maxAngleX, 
-          ((Number(e.clientY) - center[1]) / center[1]) * maxAngleY
-      ]
-      setMousePos(stumbling);
-    };
+  const [mousePos, setMousePos] = useState([0,0]);
+  
+  const center = [Number(window.innerWidth)/2, Number(window.innerHeight)/2];
+  const maxAngleX = -10;
+  const maxAngleY = 10;
+  
+  const showMousePos = (e: any) => {
+    const stumbling = [
+        ((Number(e.clientX) - center[0]) / center[0]) * maxAngleX, 
+        ((Number(e.clientY) - center[1]) / center[1]) * maxAngleY
+    ]
+    setMousePos(stumbling);
+  };
 
-    const throttleShowMousePos = throttle(showMousePos, 3000);
-    
-    const mirrorImages: Object = document.getElementsByClassName('mirror-images');
-    if (document.readyState === 'complete') {
-      if (!halt) {
-        document.querySelector('body')?.addEventListener('mousemove', showMousePos);
-        
-        Object.values(mirrorImages).forEach((img: any) => {
-          img.style.transform = `rotateX(${mousePos[1]}deg) rotateY(${mousePos[0]}deg)`;
-        })
-      }
-      else {
-        document.querySelector('body')?.removeEventListener('mousemove', showMousePos);
-        
-        Object.values(mirrorImages).forEach((img: any) => {
-          img.style.transform = 'none';
-        })
-      }
-    } 
-    
-    const responsiveMargin = Number(window.innerWidth) > 768 ? '70px': '40px';
-    const responsiveHeight = Number(window.innerWidth) > 768 ? `${height}px`: '300px';
 
-    return (
-    <div className="shadow-black" 
-        style={{
-          margin: responsiveMargin,
-          perspective: '1000px',
-        }}
-        draggable={false}
-    >
-      <div className="mirror-images" 
-        style={{
-          position: 'relative', 
-          width:'100%',
-          margin: 'auto',
-          height: responsiveHeight, 
-          boxShadow: '30px 30px 100px rgba(100,100,150, 0.9)',
-          borderRadius: '20%',
-          outline: 'auto whitesmoke',
-        }}
-        
+  
+  const mirrorImages: Object = document.getElementsByClassName('mirror-images');
+  if (document.readyState === 'complete') {
+    if (!halt) {
+      document.querySelector('body')?.addEventListener('mousemove', showMousePos);
+      
+      Object.values(mirrorImages).forEach((img: any) => {
+        img.style.transform = `rotateX(${mousePos[1]}deg) rotateY(${mousePos[0]}deg)`;
+      })
+    }
+    else {
+      document.querySelector('body')?.removeEventListener('mousemove', showMousePos);
+      
+      Object.values(mirrorImages).forEach((img: any) => {
+        img.style.transform = 'none';
+      })
+    }
+  } 
+  
+  const responsiveMargin = Number(window.innerWidth) > 768 ? '70px': '40px';
+  const responsiveHeight = Number(window.innerWidth) > 768 ? `${height}px`: '300px';
 
-        >
-        <Image
-            draggable={false} 
-            src={url} 
-            alt={alt} 
-            quality={100}
-            fill
-            sizes="100%"
-            style={{
-              objectFit: 'fill', zIndex: '0', borderRadius: '20%'
-            }}
-        />
+  return (
+  <div className="shadow-black" 
+      style={{
+        margin: responsiveMargin,
+        perspective: '1000px',
+      }}
+      draggable={false}
+  >
+    <div className="mirror-images" 
+      style={{
+        position: 'relative', 
+        width:'100%',
+        margin: 'auto',
+        height: responsiveHeight, 
+        boxShadow: '30px 30px 100px rgba(100,100,150, 0.9)',
+        borderRadius: '20%',
+        outline: 'auto whitesmoke',
+      }}
+      
 
-      </div>
+      >
+      <Image
+          draggable={false} 
+          src={url} 
+          alt={alt} 
+          quality={100}
+          fill
+          sizes="100%"
+          style={{
+            objectFit: 'fill', zIndex: '0', borderRadius: '20%'
+          }}
+      />
 
-      <div className="text-center w-full mt-16 flex gap-1" draggable={false}>
-        <MyLinearGradient stroke="white" color="lightgreen" edgeColor="rgba(0,0,0,0)" margin="0" padding="5">
-          <p className="text-black m-0" >{text}
-          {' '}
-          <MyLink pathname={links[0]} title="Demo" />
-          {" | "}
-          <MyLink pathname={links[1]} title="Source" />
-          </p>
-        </MyLinearGradient>
-      </div>
     </div>
-    )
+
+    <div className="text-center w-full mt-16 flex gap-1" draggable={false}>
+      <MyLinearGradient stroke="white" color="lightgreen" 
+        edgeColor="rgba(0,0,0,0)" padding="5">
+        <p className="text-black m-0" >{text}
+        {' '}
+        <MyLink pathname={links[0]} title="Demo" />
+        {" | "}
+        <MyLink pathname={links[1]} title="Source" />
+        </p>
+      </MyLinearGradient>
+    </div>
+  </div>
+  )
 }
 
 export const MyLink = ({
@@ -254,7 +225,7 @@ export const MyNavigation = ({
   return (
   <div className="flex justify-end">
     <div className="fixed top-4 right-4 z-10">
-    <MyLinearGradient stroke="lavender" color="rgba(0,0,0,0)" edgeColor="white" margin="0" padding="0" >
+    <MyLinearGradient stroke="lavender" color="rgba(0,0,0,0)" edgeColor="white"     padding="0" >
       <div className="text-black flex flex-row gap-2 px-2">
         {children}
       </div>
@@ -269,15 +240,14 @@ export const MyLinearGradient = ({
     color,
     edgeColor,
     stroke,
-    margin,
+
     padding
 }:{
     children: React.ReactNode,
     color: string,
-    margin?: string,
-    padding: string,
+    edgeColor: string,
     stroke: string,
-    edgeColor: string
+    padding: string
 }) => {
 
     const [resPadding, setResPadding] = useState(padding);
@@ -383,17 +353,18 @@ export const MyForm = ({
   const myHandleSubmit = (e: any) => {
     
     const form = e.target;
+    let valid = true;
 
     Object.values(form).forEach((input: any) => {
       
-      const emailRegex = /^([a-z0-9-\_\.\#\$\&\?]+)@([a-z0-9-]+).([a-z0-9]{2,4})$/g;
+      const emailRegex = /^([a-z0-9-_.#$&?]+)@([a-z0-9-]+).([a-z0-9]{2,4})$/g;
       if (input.type === 'email' && !input.value.match(emailRegex)) {
         const newP = notice('email is not valid');
         input.style.color = 'red';
         input.after(newP);
         setTimeout(() => newP.remove(), 4000);
         e.preventDefault();
-        return
+        valid = false;
       }
 
       if (input.type === 'text' && input.value.trim().length === 0) {
@@ -402,7 +373,7 @@ export const MyForm = ({
         input.after(newP);
         setTimeout(() => newP.remove(), 4000);
         e.preventDefault();
-        return
+        valid = false
       }
 
       if (input.name === 'message' && input.value.trim().length === 0) {
@@ -411,21 +382,21 @@ export const MyForm = ({
         input.after(newP);
         setTimeout(() => newP.remove(), 4000);
         e.preventDefault();
-        return
+        valid = false
       }
       
 
     })
 
-    handleSubmit(e);
+    if (valid) handleSubmit(e);
     
 
   }
 
   if (state.succeeded && back) {
-    return <div className="text-center" >
-      <MyParagraph2 text="Your message succesfully sent." />;
-      <MyFormBtn callback={() => setBack(false)} text="BACK" />
+    return <div className="text-center">
+      <MyParagraph2 text="Your message succesfully sent."/>
+      <MyFormBtn callback={() => setBack(false)} text="BACK"/>
     </div>
   }
 

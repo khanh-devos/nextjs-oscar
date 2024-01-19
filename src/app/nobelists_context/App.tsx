@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import AllNations from "./components/AllNations";
 import City from "./components/City";
 import MyHeader from "./components/Header";

@@ -1,7 +1,5 @@
 import { Metadata } from "next";
 import App from "./App";
-import { MyHeader1, MyParagraph1, MyParagraph3 } from "../styledComponents";
-
 
 
 export const metadata: Metadata = {
@@ -11,14 +9,9 @@ export const metadata: Metadata = {
 }
 
 const Portfolio = () => {
-    
-
     return (
       <div className="">
-        
         <App/>
-        
-
       </div>
     )
 }

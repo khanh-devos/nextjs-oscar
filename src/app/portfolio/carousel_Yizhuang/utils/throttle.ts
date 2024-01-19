@@ -1,5 +1,6 @@
+/* eslint-disable */
 const throttle = (
-  func: () => void,
+  func: Function,
   limit: number,
   setIsInThrottle?: (value?: boolean) => void
 ): (() => void) => {

@@ -1,13 +1,13 @@
 'use client'
  
-import { createContext } from 'react'
+import { createContext, ReactNode } from 'react'
  
 
 
 export const Data = createContext({})
  
 export default function GlobalData({ children }: {
-    children: React.ReactNode
+    children: ReactNode
   }) {
 
  

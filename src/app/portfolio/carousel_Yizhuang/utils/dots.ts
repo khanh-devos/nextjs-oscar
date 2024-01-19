@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { getOriginalCounterPart } from "./clones";
 import { CarouselInternalState, CarouselProps } from "../types";
 import { getSlidesToSlide } from "./common";

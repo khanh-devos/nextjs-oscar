@@ -1,5 +1,5 @@
-import { MyHeader1, MyLinearGradient, MyParagraph1, MyParagraph2, MySlidingShow } from "@/app/styledComponents";
-import { useEffect } from "react";
+import { MyHeader1, MyLinearGradient,
+  MyParagraph1, MyParagraph2 } from "@/app/styledComponents";
 
 
 const Home = () => {

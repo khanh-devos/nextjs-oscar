@@ -7,7 +7,7 @@ import Home from "./components/Home"
 import Navigation from "./components/Navigation"
 import Projects from "./components/Projects"
 import typo1 from "../../imgs/portfolio/typo1.png"
-import { MyParagraph2, MySlidingShow } from "../styledComponents"
+import { MySlidingShow } from "../styledComponents"
 import Footer from "./components/Footer"
 
 

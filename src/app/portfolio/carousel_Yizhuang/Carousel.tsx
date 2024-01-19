@@ -431,7 +431,7 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
     if (this.isAnimationAllowed) {
       if (this.props.fading) this.setItemOpacity()
       if (this.props.flying) this.setItemFlying()
-    };
+    }
     
   }
   public correctClonesPosition({
@@ -501,7 +501,7 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
 
       
       item.style.opacity = opacity;
-
+      
       if (isReachingTheEnd && index === nextSlide + shownNum) {
         // For the case, reset the currentSlide by nextSlide.
         item.style.opacity = '0';
@@ -711,10 +711,10 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
 
       }
 
-     
+      
       item.style.opacity = opacity;
-      
-      
+
+
     })
     
 
