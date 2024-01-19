@@ -114,7 +114,6 @@ const throttle = (fn: Function, wait: number) => {
     if (!inThrottle) {
       fn.apply(context, args);
       lastTime = Date.now();
-      console.log(inThrottle);
       inThrottle = true;
 
 
@@ -124,7 +123,6 @@ const throttle = (fn: Function, wait: number) => {
       if (Date.now() - lastTime >= wait) {
         // fn.apply(context, args);
         lastTime = Date.now();
-        console.log(inThrottle);
       }
       
       // }, Math.max(wait - (Date.now() - lastTime), 0));
@@ -184,14 +182,16 @@ export const MirroredImage = ({
     return (
     <div className="shadow-black" 
         style={{
-            margin: responsiveMargin,
-            perspective: '1000px'
+          margin: responsiveMargin,
+          perspective: '1000px',
         }}
         draggable={false}
     >
       <div className="mirror-images" 
-        style={{position: 'relative', 
-          width:'100%', 
+        style={{
+          position: 'relative', 
+          width:'100%',
+          margin: 'auto',
           height: responsiveHeight, 
           boxShadow: '30px 30px 100px rgba(100,100,150, 0.9)',
           borderRadius: '20%',
@@ -215,14 +215,14 @@ export const MirroredImage = ({
       </div>
 
       <div className="text-center w-full mt-16 flex gap-1" draggable={false}>
-      <MyLinearGradient stroke="white" color="lightgreen" edgeColor="rgba(0,0,0,0)" margin="0" padding="5">
-        <p className="text-black m-0" >{text}
-        {' '}
-        <MyLink pathname={links[0]} title="Demo" />
-        {" | "}
-        <MyLink pathname={links[1]} title="Source" />
-        </p>
-      </MyLinearGradient>
+        <MyLinearGradient stroke="white" color="lightgreen" edgeColor="rgba(0,0,0,0)" margin="0" padding="5">
+          <p className="text-black m-0" >{text}
+          {' '}
+          <MyLink pathname={links[0]} title="Demo" />
+          {" | "}
+          <MyLink pathname={links[1]} title="Source" />
+          </p>
+        </MyLinearGradient>
       </div>
     </div>
     )
@@ -274,21 +274,18 @@ export const MyLinearGradient = ({
 }:{
     children: React.ReactNode,
     color: string,
-    margin: string,
+    margin?: string,
     padding: string,
     stroke: string,
     edgeColor: string
 }) => {
 
-    const [resMargin, setResMargin] = useState(margin);
     const [resPadding, setResPadding] = useState(padding);
     const [resStroke, setResStroke] = useState(stroke);
     
     
-    
     useEffect(() => {
       if (Number(window.innerWidth) < 768) {
-        setResMargin('1');
         setResPadding('5');
         setResStroke('none');
       }
@@ -299,13 +296,12 @@ export const MyLinearGradient = ({
       style={{
         background: `linear-gradient(to right, ${edgeColor}, ${color}, ${color}, ${color}, ${color}, ${edgeColor})`, 
         border: `1px solid ${resStroke}`,
-        marginLeft: `${resMargin}%`,
-        marginRight: `${resMargin}%`,
         padding: `2% ${resPadding}%`,
         borderRadius: '10px',
         boxShadow: '30px 30px 60px rgba(100,100,150, .4)',
         width: 'fit-content',
-        minWidth: '60%',
+        minWidth: '70%',
+        margin: `auto`
         }}>
         {children}
     </div>)
@@ -421,30 +417,13 @@ export const MyForm = ({
 
     })
 
-
     handleSubmit(e);
     
 
   }
 
-
-  const handleMouseOver = (e: any) => {
-    e.target.style.background = `orange url(${typo1.src}) no-repeat`;
-    e.target.style.backgroundBlendMode = 'multiply';
-  }
-
-  const handleMouseOut = (e: any) => {
-    e.target.style.background = `skyblue url(${typo1.src}) no-repeat`;
-    e.target.style.backgroundBlendMode = 'multiply';
-  }
-
-  const handleMouseDown = (e: any) => {
-    e.target.style.background = `#ff6b00 url(${typo1.src}) no-repeat`;
-    e.target.style.backgroundBlendMode = 'multiply';
-  }
-
   if (state.succeeded && back) {
-    return <div className="text-center">
+    return <div className="text-center" >
       <MyParagraph2 text="Your message succesfully sent." />;
       <MyFormBtn callback={() => setBack(false)} text="BACK" />
     </div>
@@ -452,7 +431,8 @@ export const MyForm = ({
 
   return (
     <form
-      style={{textAlign: 'center', position: 'relative'}}
+      className=""
+      style={{textAlign: 'center', position: 'relative', margin: 'auto'}}
       onSubmit={myHandleSubmit}
     >
       {children}

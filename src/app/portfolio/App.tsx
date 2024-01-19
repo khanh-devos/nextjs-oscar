@@ -10,6 +10,7 @@ import typo1 from "../../imgs/portfolio/typo1.png"
 import { MyParagraph2, MySlidingShow } from "../styledComponents"
 import Footer from "./components/Footer"
 
+
 const App = () => {
   const [show, setShow] = useState([0, 0, 0]);
   const [image, setImage] = useState('grey');

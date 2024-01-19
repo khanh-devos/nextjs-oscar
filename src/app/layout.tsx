@@ -1,4 +1,5 @@
 import './globals.css'
+import './assets/styles.css'
 import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
 import GlobalData from './context'

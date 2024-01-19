@@ -1,11 +1,11 @@
 import { MyHeader1, MyLinearGradient, MyParagraph1, MyParagraph2, MySlidingShow } from "@/app/styledComponents";
+import { useEffect } from "react";
 
 
 const Home = () => {
   
-
-  return (<div className="mt-20">
-    <MyLinearGradient stroke="lavender" color="white" edgeColor="rgba(0,0,0,0)" margin="10" padding="5">
+  return (<div className={`mt-20 px-1 md:px-20`}>
+    <MyLinearGradient stroke="lavender" color="white" edgeColor="rgba(0,0,0,0)" padding="5">
     <MyHeader1 text="Hi, I am Khanh." />
 
     <MyParagraph1 text="A remote full-stack developer." />
