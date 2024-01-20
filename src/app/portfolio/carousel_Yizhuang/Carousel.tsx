@@ -523,7 +523,7 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
     const animatedTime = this.props.transitionDuration || defaultTransitionDuration;
 
     const noFlying = `translate3d(0,0,0) scale(1) rotateZ(0deg)`;
-    const flying = this.props.customFlying || `translateY(-${this.state.itemWidth}px) scale(0) rotateZ(-180deg)`;
+    const flying = `translateY(-${this.state.itemWidth}px) scale(0) rotateZ(-180deg)`;
     
 
     Object.values(items!).forEach((item: any, index: number) => {
@@ -700,7 +700,7 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
         opacity = '0';
         if ((this.direction === 'left' && index === pivot - 1) ||
           (this.direction === 'right' && index === shownIndexLimit + 1)) {
-          opacity = `${(Math.abs(move - currentPos) % step) * 1.2 / step}`;
+          opacity = `${(Math.abs(move - currentPos) % step) / step}`;
         }
 
       }
@@ -709,7 +709,7 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
         opacity = '1';
         if ((this.direction === 'left' && index === shownIndexLimit) ||
           (this.direction === 'right' && index === pivot)) {
-          opacity = `${1 - ((Math.abs(move - currentPos) % step) * 1.2 / step)}`;
+          opacity = `${1 - ((Math.abs(move - currentPos) % step) / step)}`;
         }
 
       }
@@ -744,7 +744,7 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
             
           const rate = 1 - ((Math.abs(move - currentPos) % step) / step);
           // rate 1 -> 0
-          transform = `translateY(-${step * rate}px) scale(${1 - rate / 2}) rotateZ(-${180 * rate / 2}deg)`;
+          transform = `translateY(-${step * rate}px) scale(${1 - rate}) rotateZ(-${180 * rate}deg)`;
         }
 
       }
