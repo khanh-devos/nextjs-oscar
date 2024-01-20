@@ -55,6 +55,7 @@ export interface CarouselProps {
   partialVisible?: boolean;
   partialVisbile?: boolean; // old typo - deprecated (will be remove in 3.0)
   customTransition?: string;
+  customFlying?: string; 
   transitionDuration?: number;
   // if you are using customTransition, make sure to put the duration here.
   // for example, customTransition="all .5"  then put transitionDuration as 500.

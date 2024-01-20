@@ -129,6 +129,7 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
     this.initialY = 0;
     this.isInThrottle = false;
     this.transformPlaceHolder = 0;
+    
   }
   // we only use this when infinite mode is off
   public resetTotalItems(): void {
@@ -475,7 +476,7 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
     if (!this.props.fading) return;
 
     let opacity: string = '';
-    const items = this.listRef.current?.children,
+    const items = this.listRef.current ? this.listRef.current.children : undefined,
       pivot = nextSlide,
       shownNum = this.state.slidesToShow,
       shownIndexLimit = Math.min(pivot + shownNum - 1, this.state.totalItems - 1);
@@ -517,9 +518,13 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
       shownNum = this.state.slidesToShow,
       shownIndexLimit = Math.min(pivot + shownNum - 1, this.state.totalItems - 1);
     
-    console.log(this.state.currentSlide, 'flying')
+    
     const isReachingTheEdge = isReachingTheEnd || isReachingTheStart;
-    const animatedTime = this.props.transitionDuration || defaultTransitionDuration
+    const animatedTime = this.props.transitionDuration || defaultTransitionDuration;
+
+    const noFlying = `translate3d(0,0,0) scale(1) rotateZ(0deg)`;
+    const flying = this.props.customFlying || `translateY(-${this.state.itemWidth}px) scale(0) rotateZ(-180deg)`;
+    
 
     Object.values(items!).forEach((item: any, index: number) => {
       item.style.transitionDuration = isReachingTheEdge ?
@@ -531,21 +536,19 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
       if (index < pivot || index > shownIndexLimit) {
 
         if (index === pivot - 1) {
-          transform = isReachingTheEdge ?
-            `translate3d(0,0,0) scale(1) rotateZ(0deg)` :
-            `translateY(-${this.state.itemWidth}px) scale(0) rotateZ(-180deg)`;
+          transform = isReachingTheEdge ? noFlying : flying;
         }
 
       }
       else {
-        transform = `translate3d(0,0,0) scale(1) rotateZ(0deg)`;
+        transform = noFlying
       }
 
       item.style.transform = transform;
 
       if (isReachingTheStart && index === nextSlide - 1) {
         // for the case: the very first move is from left to right.
-        item.style.transform = `translateY(-${this.state.itemWidth}px) scale(0) rotateZ(-180deg)`;
+        item.style.transform = flying;
       }
       
     })
@@ -711,7 +714,7 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
 
       }
 
-      
+      item.style.transitionDuration = '0s';
       item.style.opacity = opacity;
 
 
@@ -762,7 +765,7 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
 
       }
 
-     
+      item.style.transitionDuration = '0s';
       item.style.transform = transform;
       
       
@@ -873,6 +876,7 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
           this.correctItemsPosition(this.state.itemWidth, true, true);
         }
       }
+      
       this.resetMoveStatus();
     }
   }
