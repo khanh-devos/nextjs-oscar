@@ -30,7 +30,7 @@ const Projects = () => {
       infinite={true} 
       fading={true}
       flying={true} 
-      autoPlay={false}
+      autoPlay={true}
       responsive={responsive}
       arrows={false}
     >
