@@ -70,7 +70,6 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
   public autoPlay?: any;
   public isInThrottle?: boolean;
   public initialY: number;
-  public isFirstTime: boolean;
 
   private transformPlaceHolder: number;
   private itemsToShowTimeout: any;
@@ -103,7 +102,7 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
     this.handleEnter = this.handleEnter.bind(this);
     this.setIsInThrottle = this.setIsInThrottle.bind(this);
     this.handleItemOpacity = this.handleItemOpacity.bind(this);
-    this.handleItemOpacity = this.handleItemOpacity.bind(this);
+    this.handleItemFlying = this.handleItemFlying.bind(this);
     this.setItemOpacity = this.setItemOpacity.bind(this);
     this.setItemFlying = this.setItemFlying.bind(this);
 
@@ -130,7 +129,6 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
     this.initialY = 0;
     this.isInThrottle = false;
     this.transformPlaceHolder = 0;
-    this.isFirstTime = true;
   }
   // we only use this when infinite mode is off
   public resetTotalItems(): void {
@@ -183,6 +181,7 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
     // set getClones() to figure it out.
     if (childrenArr.length < this.state.slidesToShow) return;
     
+    console.log('current')
     // set getClones() to figure it out.
     const isPositive = childrenArr.length - this.state.slidesToShow * 2;
     const midCurrentSlide = childrenArr.length - Math.max(isPositive, 0);
@@ -197,7 +196,6 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
 
   }
   public componentDidMount(): void {
-    this.isFirstTime = true;
     this.setState({ domLoaded: true });
     this.setItemsToShow();
     window.addEventListener("resize", this.onResize as React.EventHandler<any>);
@@ -519,7 +517,7 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
       shownNum = this.state.slidesToShow,
       shownIndexLimit = Math.min(pivot + shownNum - 1, this.state.totalItems - 1);
     
-    
+    console.log(this.state.currentSlide, 'flying')
     const isReachingTheEdge = isReachingTheEnd || isReachingTheStart;
     const animatedTime = this.props.transitionDuration || defaultTransitionDuration
 
@@ -579,11 +577,7 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
     this.isAnimationAllowed = true;
     this.props.shouldResetAutoplay && this.resetAutoplayInterval();
 
-    // prevent setting initial currentSlide once auto playing is running.
-    if (this.props.autoPlay && this.isFirstTime && this.props.infinite) {
-      this.isFirstTime = false;
-    }
-
+    
     this.setState(
       {
         transform: nextPosition,
@@ -769,8 +763,6 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
       }
 
      
-      item.style.transitionDuration = `${defaultTransitionDuration / 1000}s`;
-      item.style.transitionTimingFunction = 'ease-in-out';
       item.style.transform = transform;
       
       
@@ -792,12 +784,6 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
     this.initialY = clientY;
     this.lastX = clientX;
     this.isAnimationAllowed = false;
-
-    if (this.props.infinite && this.isFirstTime) {
-      // in case of infinite, set the initial currentSlide the middle item.
-      this.setInitialCurrentSlide();
-      this.isFirstTime = false;
-    }
 
   }
   public handleMove(e: React.MouseEvent | React.TouchEvent): void {

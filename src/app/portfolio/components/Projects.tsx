@@ -7,8 +7,6 @@ import { desktopProjects } from "./data";
 
 
 
-
-
 const Projects = () => {
   const [halt, setHalt] = useState(false);
 
@@ -33,7 +31,6 @@ const Projects = () => {
       fading={true}
       flying={true} 
       autoPlay={true}
-      pauseOnHover={true}
       responsive={responsive}
       arrows={false}
     >
