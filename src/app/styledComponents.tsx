@@ -110,7 +110,6 @@ export const MirroredImage = ({
   text: string,
   links: Array<string>
 }) => {
-
   
   const center = [Number(window.innerWidth)/2, Number(window.innerHeight)/2];
   const maxAngleX = -20, maxAngleY = -20;
@@ -125,7 +124,8 @@ export const MirroredImage = ({
 
 
   const showMousePos = (e: any) => {
-    if (halt) {
+    // no perspective in case of mouse over or mobile view
+    if (halt || Number(window.innerWidth) < 768) {
       if (imageRef.current) imageRef.current.style.transform = `none`;
       if (divRef.current) divRef.current.style.transform = `none`;
       return
@@ -190,8 +190,6 @@ export const MirroredImage = ({
         borderRadius: '20%',
         outline: `auto whitesmoke`,
         boxShadow: '30px 30px 100px rgba(100,100,150, 0.9)',
-        border: '3px dotted green',
-        scale: '1.02'
       }}
     >
     </div>
