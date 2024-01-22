@@ -423,6 +423,10 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
           this.setIsInThrottle(false);
           this.resetAutoplayInterval();
           this.goToSlide(0, undefined, !!this.props.rewindWithAnimation);
+
+          // Update new currentSlide '0' for fading and flying features.
+          this.setItemOpacity(true, true, 0);
+          this.setItemFlying(true, true, 0);
         }, rewindBuffer + this.props.autoPlaySpeed!);
       }
     }

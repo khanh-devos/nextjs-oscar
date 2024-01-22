@@ -1,5 +1,4 @@
 import { MirroredImage } from "@/app/styledComponents";
-import { useState } from "react";
 // import Carousel from 'react-multi-carousel';
 import Carousel from "../carousel_Yizhuang/Carousel";
 // import 'react-multi-carousel/lib/styles.css';
@@ -8,8 +7,6 @@ import { desktopProjects } from "./data";
 
 
 const Projects = () => {
-  const [halt, setHalt] = useState(false);
-
 
   const responsive = {
     desktop: {
@@ -31,6 +28,7 @@ const Projects = () => {
       fading={true}
       flying={true} 
       autoPlay={true}
+      rewind={false}
       responsive={responsive}
       arrows={false}
     >
@@ -40,8 +38,6 @@ const Projects = () => {
         return (
           <button onDoubleClick={() => window.open(project.url)}
             className="relative select-none" key={project.id}
-            onMouseDown={() => setHalt(true)}
-            onMouseUp={() => setHalt(false)}
             style={{
               minWidth: '100%',
               padding: '0 2%'
@@ -53,7 +49,6 @@ const Projects = () => {
                 height="400"
                 text={project.description}
                 links={[project.url, project.git]}
-                halt={halt}
               />
               
           </button>
