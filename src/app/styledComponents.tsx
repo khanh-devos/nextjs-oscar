@@ -129,7 +129,7 @@ export const MirroredImage = ({
       if (imageRef.current) imageRef.current.style.transform = `none`;
       if (divRef.current) divRef.current.style.transform = `none`;
       return
-    };
+    }
 
     const newZ = e.clientY - center[1] > 0 ? '4' : '6';
 
@@ -153,7 +153,7 @@ export const MirroredImage = ({
       divRef.current.style.zIndex = newZ;
     }
     
-  };
+  }
 
 
   
