@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from "next/image";
 import { useForm } from "@formspree/react";
 import typo1 from "../imgs/portfolio/typo1.png"
+import Glowing from "./portfolio/glowing/glowing";
 
 export const MyHeader1 = ({text} : {text: string}) => {
     return <h1 className="
@@ -229,6 +230,7 @@ export const MirroredImage = ({
 
 
     <div className="text-center w-full mt-16 flex gap-1" draggable={false}>
+      <Glowing>
       <MyLinearGradient stroke="white" color="lightgreen" 
         edgeColor="rgba(0,0,0,0)" padding="5">
         <p className="text-black m-0" >{text}
@@ -238,6 +240,7 @@ export const MirroredImage = ({
         <MyLink pathname={links[1]} title="Source" />
         </p>
       </MyLinearGradient>
+      </Glowing>
     </div>
   </div>
   )
