@@ -102,13 +102,14 @@ export const MyGridSection = ({
 }
 
 export const MirroredImage = ({
-  url, alt, height, text, links
+  url, alt, height, text, links, id
 }:{
   url: string,
   alt: string,
   height: string,
   text: string,
-  links: Array<string>
+  links: Array<string>,
+  id: string
 }) => {
   
   const center = [Number(window.innerWidth)/2, Number(window.innerHeight)/2];
@@ -189,8 +190,8 @@ export const MirroredImage = ({
         margin: 'auto',
         height: responsiveHeight, 
         borderRadius: '20%',
-        outline: `auto whitesmoke`,
-        border: '3px solid lightgreen',
+        outline: `auto lightgreen`,
+        border: '3px solid red',
         boxShadow: '30px 30px 100px rgba(100,100,150, 0.9)',
       }}
     >
@@ -203,10 +204,13 @@ export const MirroredImage = ({
         width:'100%',
         margin: 'auto',
         height: responsiveHeight, 
-        borderRadius: '20%',
+        borderRadius: '60%',
         zIndex: '5',
+        scale: id === 'project3' ? '1' : '0.95',
+        boxShadow: id === 'project3' ? 'none' : '5px 5px 5px rgba(50,50,50, 0.7)',
       }}
     >
+      
       <Image
           ref={imageRef}
           onMouseEnter={removePerspective}
@@ -218,7 +222,7 @@ export const MirroredImage = ({
           fill
           sizes="100%"
           style={{
-            objectFit: 'fill', zIndex: '5', borderRadius: '20%', scale: '0.98'
+            objectFit: 'fill', zIndex: '5', borderRadius: '50%',
           }}
       />
     </div>

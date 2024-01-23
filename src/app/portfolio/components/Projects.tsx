@@ -44,6 +44,7 @@ const Projects = () => {
             }}
             >
               <MirroredImage
+                id={project.id}
                 url={project.img}
                 alt="ebike"
                 height="400"
