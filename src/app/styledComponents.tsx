@@ -112,8 +112,8 @@ export const MirroredImage = ({
 }) => {
   
   const center = [Number(window.innerWidth)/2, Number(window.innerHeight)/2];
-  const maxAngleX = 10, maxAngleY = -10;
-  const maxAngleX2 = 1.5 * -maxAngleX, maxAngleY2 = 1.5 * -maxAngleY;
+  const maxAngleX = 0, maxAngleY = -0;
+  const maxAngleX2 = 1.5 * -10, maxAngleY2 = 1.5 * -10;
   
   const imageRef: RefObject<HTMLImageElement> = React.createRef();
   const divRef: RefObject<HTMLDivElement> = React.createRef();
