@@ -26,6 +26,7 @@
   margin: 0;
   color: white;
   font-family: Rotobo, Raleway, fantasy;
+  box-sizing: border-box;
 }
 
 body {

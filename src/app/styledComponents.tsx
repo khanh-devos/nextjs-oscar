@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from "react"
+import React, { RefObject, useEffect, useState } from "react"
 import Link from 'next/link';
 import Image from "next/image";
 import { useForm } from "@formspree/react";
@@ -102,47 +102,70 @@ export const MyGridSection = ({
 }
 
 export const MirroredImage = ({
-  url, alt, height, text, links, halt
+  url, alt, height, text, links, id
 }:{
   url: string,
   alt: string,
   height: string,
   text: string,
   links: Array<string>,
-  halt?: boolean
+  id: string
 }) => {
-
-  const [mousePos, setMousePos] = useState([0,0]);
   
   const center = [Number(window.innerWidth)/2, Number(window.innerHeight)/2];
-  const maxAngleX = -10;
-  const maxAngleY = 10;
+  const maxAngleX = 0, maxAngleY = -0;
+  const maxAngleX2 = 1.5 * -10, maxAngleY2 = 1.5 * -10;
   
+  const imageRef: RefObject<HTMLImageElement> = React.createRef();
+  const divRef: RefObject<HTMLDivElement> = React.createRef();
+
+  let halt: boolean = false;
+  const removePerspective = () => {halt = true}
+  const addPerspective = () => {halt = false}
+
+
   const showMousePos = (e: any) => {
+    // no perspective in case of mouse over or mobile view
+    if (halt || Number(window.innerWidth) < 768) {
+      if (imageRef.current) imageRef.current.style.transform = `none`;
+      if (divRef.current) divRef.current.style.transform = `none`;
+      return
+    }
+
+    const newZ = e.clientY - center[1] > 0 ? '6' : '6';
+
+
     const stumbling = [
         ((Number(e.clientX) - center[0]) / center[0]) * maxAngleX, 
         ((Number(e.clientY) - center[1]) / center[1]) * maxAngleY
     ]
-    setMousePos(stumbling);
-  };
+
+    const stumbling2 = [
+      ((Number(e.clientX) - center[0]) / center[0]) * maxAngleX2, 
+      ((Number(e.clientY) - center[1]) / center[1]) * maxAngleY2
+    ]
+
+    // setMousePos(stumbling);
+    const transform = `rotateX(${stumbling[1]}deg) rotateY(${stumbling[0]}deg)`;
+    const transform2 = `rotateX(${stumbling2[1]}deg) rotateY(${stumbling2[0]}deg)`;
+    if (imageRef.current) imageRef.current.style.transform = transform;
+    
+    if (divRef.current) {
+      divRef.current.style.transform = transform2;
+      divRef.current.style.zIndex = newZ;
+    }
+    
+  }
 
 
   
-  const mirrorImages: Object = document.getElementsByClassName('mirror-images');
+  
   if (document.readyState === 'complete') {
     if (!halt) {
       document.querySelector('body')?.addEventListener('mousemove', showMousePos);
-      
-      Object.values(mirrorImages).forEach((img: any) => {
-        img.style.transform = `rotateX(${mousePos[1]}deg) rotateY(${mousePos[0]}deg)`;
-      })
     }
     else {
       document.querySelector('body')?.removeEventListener('mousemove', showMousePos);
-      
-      Object.values(mirrorImages).forEach((img: any) => {
-        img.style.transform = 'none';
-      })
     }
   } 
   
@@ -157,32 +180,53 @@ export const MirroredImage = ({
       }}
       draggable={false}
   >
-    <div className="mirror-images" 
+    <div
+      ref={divRef}
+      onMouseEnter={removePerspective}
+      onMouseLeave={addPerspective}
       style={{
-        position: 'relative', 
+        position: 'relative',
         width:'100%',
         margin: 'auto',
         height: responsiveHeight, 
-        boxShadow: '30px 30px 100px rgba(100,100,150, 0.9)',
         borderRadius: '20%',
-        outline: 'auto whitesmoke',
+        outline: `auto lightgreen`,
+        border: '3px solid red',
+        boxShadow: '30px 30px 100px rgba(100,100,150, 0.9)',
       }}
-      
+    >
+    </div>
 
-      >
+    <div
+      style={{
+        position: 'absolute',
+        top: '0', left: '0',
+        width:'100%',
+        margin: 'auto',
+        height: responsiveHeight, 
+        borderRadius: '60%',
+        zIndex: '5',
+        scale: id === 'project3' ? '1' : '0.95',
+        boxShadow: id === 'project3' ? 'none' : '5px 5px 5px rgba(50,50,50, 0.7)',
+      }}
+    >
+      
       <Image
+          ref={imageRef}
+          onMouseEnter={removePerspective}
+          onMouseLeave={addPerspective}
           draggable={false} 
           src={url} 
-          alt={alt} 
+          alt={alt}
           quality={100}
           fill
           sizes="100%"
           style={{
-            objectFit: 'fill', zIndex: '0', borderRadius: '20%'
+            objectFit: 'fill', zIndex: '5', borderRadius: '50%',
           }}
       />
-
     </div>
+
 
     <div className="text-center w-full mt-16 flex gap-1" draggable={false}>
       <MyLinearGradient stroke="white" color="lightgreen" 
