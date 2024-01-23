@@ -30,7 +30,7 @@ export const desktopProjects = [
   {
     id: 'project0',
     title: 'TO DO List',
-    img: 'https://www.adobe.com/content/dam/dx-dc/images/landing/discover/uk/pomodoro-technique/AdobeStock_124738800.jpeg',
+    img: 'https://ml2cwuph0cxx.i.optimole.com/w:1024/h:1024/q:90/https://i0.wp.com/blog.particle.io/wp-content/uploads/2018/06/pomodoro-shrunk.png?fit=812%2C540&ssl=1',
     tech: ['Webpack'],
     description: 'Set tasks to do, check to update a task state completed, modify task description, drag and drop feature, timing (step = 30\') and alarm sound',
     url: 'https://khanh-devos.github.io/TO-DO-LIST/dist/',
