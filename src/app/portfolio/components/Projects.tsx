@@ -20,24 +20,24 @@ const Projects = () => {
   };
 
 
-  return (<div className="mt-10">
+  return (<div className="">
     <Carousel 
-      transitionDuration={400}
-      customTransition="transform 400ms ease-in-out"
+      transitionDuration={500}
+      customTransition="transform 500ms ease-in-out"
       infinite={true} 
       fading={true}
-      flying={true} 
+      flying={true}
       autoPlay={true}
       rewind={false}
       responsive={responsive}
       arrows={false}
     >
       {
-        desktopProjects.slice(0, 4).map((project) => {
+        [...desktopProjects].slice().map((project) => {
         
         return (
           <button onDoubleClick={() => window.open(project.url)}
-            className="relative select-none" key={project.id}
+            className="relative select-none mt-10" key={project.id}
             style={{
               minWidth: '100%',
               padding: '0 2%'

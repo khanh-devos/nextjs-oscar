@@ -27,9 +27,11 @@ import Dots from "./Dots";
 import { LeftArrow, RightArrow } from "./Arrows";
 import CarouselItems from "./CarouselItems";
 import { getTransform, parsePosition } from "./utils/common";
+import { handleItemOpacity, setItemOpacity } from "./utils/itemFading";
+import { handleItemFlying, setItemFlying } from "./utils/itemFlying";
 
-const defaultTransitionDuration = 400;
-const defaultTransition = `transform 400ms ease-in-out`;
+export const defaultTransitionDuration = 400;
+export const defaultTransition = `transform 400ms ease-in-out`;
 class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
   public static defaultProps = {
     flying: false,
@@ -101,10 +103,6 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
     this.onKeyUp = this.onKeyUp.bind(this);
     this.handleEnter = this.handleEnter.bind(this);
     this.setIsInThrottle = this.setIsInThrottle.bind(this);
-    this.handleItemOpacity = this.handleItemOpacity.bind(this);
-    this.handleItemFlying = this.handleItemFlying.bind(this);
-    this.setItemOpacity = this.setItemOpacity.bind(this);
-    this.setItemFlying = this.setItemFlying.bind(this);
 
     this.next = throttle(
       this.next.bind(this),
@@ -175,27 +173,6 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
       }
     }
   }
-  public setInitialCurrentSlide() {
-    if (!this.props.infinite) return;
-    
-    const childrenArr = React.Children.toArray(this.props.children);
-    // set getClones() to figure it out.
-    if (childrenArr.length < this.state.slidesToShow) return;
-    
-    console.log('current')
-    // set getClones() to figure it out.
-    const isPositive = childrenArr.length - this.state.slidesToShow * 2;
-    const midCurrentSlide = childrenArr.length - Math.max(isPositive, 0);
-
-    this.setState({
-      currentSlide: midCurrentSlide,
-      transform: -midCurrentSlide * this.state.itemWidth 
-    })
-    
-    this.setItemFlying(true, true, midCurrentSlide);
-    this.setItemOpacity(true, true, midCurrentSlide);
-
-  }
   public componentDidMount(): void {
     this.setState({ domLoaded: true });
     this.setItemsToShow();
@@ -209,7 +186,9 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
       this.autoPlay = setInterval(this.next, this.props.autoPlaySpeed);
     }
   }
-
+  public getItems():object|undefined {
+    return this.listRef.current ? this.listRef.current.children : undefined;
+  }
   /*
   We only want to set the clones on the client-side cause it relies on getting the width of the carousel items.
   */
@@ -425,16 +404,16 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
           this.goToSlide(0, undefined, !!this.props.rewindWithAnimation);
 
           // Update new currentSlide '0' for fading and flying features.
-          this.setItemOpacity(true, true, 0);
-          this.setItemFlying(true, true, 0);
+          setItemOpacity(this, 0, true, true);
+          setItemFlying(this, 0, true, true);
         }, rewindBuffer + this.props.autoPlaySpeed!);
       }
     }
 
     // set the opacity of all the Carousel children
     if (this.isAnimationAllowed) {
-      if (this.props.fading) this.setItemOpacity()
-      if (this.props.flying) this.setItemFlying()
+      if (this.props.fading) setItemOpacity(this)
+      if (this.props.flying) setItemFlying(this)
     }
     
   }
@@ -460,8 +439,8 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
       if (isReachingTheEnd || isReachingTheStart) {
         
         this.isAnimationAllowed = false;
-        this.setItemOpacity();
-        this.setItemFlying();
+        setItemOpacity(this);
+        setItemFlying(this);
 
         Carousel.transformTimeout = setTimeout(() => {
           this.setState({
@@ -469,93 +448,12 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
             currentSlide: nextSlide
           });
           
-          this.setItemOpacity(isReachingTheEnd, isReachingTheStart, nextSlide);
-          this.setItemFlying(isReachingTheEnd, isReachingTheStart, nextSlide);
+          setItemOpacity(this, nextSlide, isReachingTheEnd, isReachingTheStart);
+          setItemFlying(this, nextSlide, isReachingTheEnd, isReachingTheStart);
 
         }, this.props.transitionDuration || defaultTransitionDuration);
       }
     }
-  }
-  public setItemOpacity(isReachingTheEnd: boolean = false, isReachingTheStart: boolean = false, nextSlide: number = this.state.currentSlide):void {
-    if (!this.props.fading) return;
-
-    let opacity: string = '';
-    const items = this.listRef.current ? this.listRef.current.children : undefined,
-      pivot = nextSlide,
-      shownNum = this.state.slidesToShow,
-      shownIndexLimit = Math.min(pivot + shownNum - 1, this.state.totalItems - 1);
-
-
-    const animatedTime = this.props.transitionDuration || defaultTransitionDuration;
-    const isReachingTheEdge = isReachingTheEnd || isReachingTheStart;
-
-    Object.values(items!).forEach((item: any, index: number) => {
-      
-      item.style.transitionDuration = isReachingTheEdge ? '0s' :
-        `${animatedTime / 1000}s`;
-
-      item.style.transitionTimingFunction = isReachingTheEdge ? 'none' : 'ease-in-out';
-
-      if (index < pivot || index > shownIndexLimit) {
-        opacity = isReachingTheEdge ? '1' : '0';
-      }
-      else {
-        opacity = '1';
-      }
-
-      
-      item.style.opacity = opacity;
-      
-      if (isReachingTheEnd && index === nextSlide + shownNum) {
-        // For the case, reset the currentSlide by nextSlide.
-        item.style.opacity = '0';
-      }
-
-    })
-  }
-  public setItemFlying(isReachingTheEnd: boolean = false, isReachingTheStart: boolean = false, nextSlide: number = this.state.currentSlide):void {
-    if (!this.props.flying) return;
-
-    let transform: string = '';
-    const items = this.listRef.current?.children,
-      pivot = nextSlide,
-      shownNum = this.state.slidesToShow,
-      shownIndexLimit = Math.min(pivot + shownNum - 1, this.state.totalItems - 1);
-    
-    
-    const isReachingTheEdge = isReachingTheEnd || isReachingTheStart;
-    const animatedTime = this.props.transitionDuration || defaultTransitionDuration;
-
-    const noFlying = `translate3d(0,0,0) scale(1) rotateZ(0deg)`;
-    const flying = `translateY(-${this.state.itemWidth}px) scale(0) rotateZ(-180deg)`;
-    
-
-    Object.values(items!).forEach((item: any, index: number) => {
-      item.style.transitionDuration = isReachingTheEdge ?
-        '0s' : `${animatedTime / 1000}s`;
-
-      item.style.transitionTimingFunction = isReachingTheEdge ?
-        'none' : 'ease-in-out';
-
-      if (index < pivot || index > shownIndexLimit) {
-
-        if (index === pivot - 1) {
-          transform = isReachingTheEdge ? noFlying : flying;
-        }
-
-      }
-      else {
-        transform = noFlying
-      }
-
-      item.style.transform = transform;
-
-      if (isReachingTheStart && index === nextSlide - 1) {
-        // for the case: the very first move is from left to right.
-        item.style.transform = flying;
-      }
-      
-    })
   }
   public next(slidesHavePassed = 0): void {
     const { afterChange, beforeChange } = this.props;
@@ -682,99 +580,7 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
       clientY: parsePosition(this.props, clientY)
     };
   }
-  public handleItemOpacity(nextPosition: number): void {
-    if (!this.props.fading) return
-
-    const items = this.listRef.current?.children
-    Object.values(items!).forEach((item: any, index: number) => {
-      let opacity: string = '';
-      
-      const move = nextPosition,
-        step = this.state.itemWidth;
-
-      const pivot = this.state.currentSlide;
-      const shownNum = this.state.slidesToShow;
-
-      // totalItems triple times as infinite is true.
-      const shownIndexLimit = Math.min(pivot + shownNum - 1, this.state.totalItems - 1);
-      const currentPos = -step * pivot;
-
-      if (index < pivot || index > shownIndexLimit) {
-        // Here are all transparent items.
-        opacity = '0';
-        if ((this.direction === 'left' && index === pivot - 1) ||
-          (this.direction === 'right' && index === shownIndexLimit + 1)) {
-          opacity = `${(Math.abs(move - currentPos) % step) / step}`;
-        }
-
-      }
-      else {
-        // Here are all the current showing items.
-        opacity = '1';
-        if ((this.direction === 'left' && index === shownIndexLimit) ||
-          (this.direction === 'right' && index === pivot)) {
-          opacity = `${1 - ((Math.abs(move - currentPos) % step) / step)}`;
-        }
-
-      }
-
-      item.style.transitionDuration = '0s';
-      item.style.opacity = opacity;
-
-
-    })
-    
-
-  }
-  public handleItemFlying(nextPosition: number): void {
-    if (!this.props.flying) return
-
-    const items = this.listRef.current?.children
-    Object.values(items!).forEach((item: any, index: number) => {
-      let transform: string = '';
-      
-      const move = nextPosition,
-        step = this.state.itemWidth;
-
-      const pivot = this.state.currentSlide;
-      const shownNum = this.state.slidesToShow;
-      const shownIndexLimit = Math.min(pivot + shownNum - 1, this.state.totalItems - 1);
-      const currentPos = -step * pivot;
-
-      if (index < pivot || index > shownIndexLimit) {
-        // Here are all transparent items.
-        
-        if (this.direction === 'left' && index === pivot - 1) {
-            
-          const rate = 1 - ((Math.abs(move - currentPos) % step) / step);
-          // rate 1 -> 0
-          transform = `translateY(-${step * rate}px) scale(${1 - rate}) rotateZ(-${180 * rate}deg)`;
-        }
-
-      }
-      else {
-        // Here are all the current showing items.
-        
-        if (this.direction === 'right' && index === pivot) {
-          const isUnChanged = this.state.totalItems - shownNum === pivot
-          
-          if (!isUnChanged) {
-            const rate = ((Math.abs(move - currentPos) % step) / step);
-            // rate 0 -> 1
-            transform = `translateY(-${step * rate}px) scale(${1 - rate}) rotateZ(-${180 * rate}deg)`;
-          }
-
-
-        }
-
-      }
-
-      item.style.transitionDuration = '0s';
-      item.style.transform = transform;
-      
-      
-    })
-  }
+  
   public handleDown(e: React.MouseEvent | React.TouchEvent): void {
     if (
       (!isMouseMoveEvent(e) && !this.props.swipeable) ||
@@ -832,8 +638,8 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
           // nextPosition can be 0;
           
           this.setTransformDirectly(nextPosition);
-          this.handleItemOpacity(nextPosition);
-          this.handleItemFlying(nextPosition);
+          handleItemOpacity(this, nextPosition);
+          handleItemFlying(this, nextPosition);
           
           
         }

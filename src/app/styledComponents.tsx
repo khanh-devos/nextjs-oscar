@@ -112,8 +112,8 @@ export const MirroredImage = ({
 }) => {
   
   const center = [Number(window.innerWidth)/2, Number(window.innerHeight)/2];
-  const maxAngleX = -20, maxAngleY = -20;
-  const maxAngleX2 = (10 - maxAngleX), maxAngleY2 = (10 + maxAngleY);
+  const maxAngleX = 10, maxAngleY = -10;
+  const maxAngleX2 = 1.5 * -maxAngleX, maxAngleY2 = 1.5 * -maxAngleY;
   
   const imageRef: RefObject<HTMLImageElement> = React.createRef();
   const divRef: RefObject<HTMLDivElement> = React.createRef();
@@ -131,7 +131,8 @@ export const MirroredImage = ({
       return
     }
 
-    const newZ = e.clientY - center[1] > 0 ? '4' : '6';
+    const newZ = e.clientY - center[1] > 0 ? '6' : '6';
+
 
     const stumbling = [
         ((Number(e.clientX) - center[0]) / center[0]) * maxAngleX, 
@@ -189,6 +190,7 @@ export const MirroredImage = ({
         height: responsiveHeight, 
         borderRadius: '20%',
         outline: `auto whitesmoke`,
+        border: '3px solid lightgreen',
         boxShadow: '30px 30px 100px rgba(100,100,150, 0.9)',
       }}
     >
@@ -216,7 +218,7 @@ export const MirroredImage = ({
           fill
           sizes="100%"
           style={{
-            objectFit: 'fill', zIndex: '5', borderRadius: '20%',
+            objectFit: 'fill', zIndex: '5', borderRadius: '20%', scale: '0.98'
           }}
       />
     </div>
