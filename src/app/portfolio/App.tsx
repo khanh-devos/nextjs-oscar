@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, lazy, Dispatch, SetStateAction } from "react"
 import ErrorBoundary from "../ErrorBoundary"
 import Contact from "./components/Contact"
 import Home from "./components/Home"
@@ -11,13 +11,15 @@ import { MySlidingShow } from "../styledComponents"
 import Footer from "./components/Footer"
 
 
+
 const App = () => {
-  const [show, setShow] = useState([0, 0, 0]);
+  const [show, setShow] = useState<number[]>([0, 0, 0]);
   const [image, setImage] = useState('grey');
   
 
-
+  
   useEffect(() => {
+    console.log('mount??')
     setImage('lavender');
     setTimeout(() => setShow([1, 0, 0]), 300);
   }, [])
@@ -31,7 +33,8 @@ const App = () => {
         minHeight: '100vh',
       }}>
     <ErrorBoundary>
-      <Navigation setShow={setShow} />
+      
+      <Navigation show={show} setShow={setShow} />
 
       <MySlidingShow show={show[0]}>
         {Boolean(show[0]) && <Home />}
@@ -47,6 +50,7 @@ const App = () => {
 
       <Footer />
 
+      
     </ErrorBoundary>
 
     </div>

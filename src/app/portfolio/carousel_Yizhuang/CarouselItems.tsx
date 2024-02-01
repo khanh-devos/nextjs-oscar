@@ -59,7 +59,7 @@ const CarouselItems = ({
               id={`carousel-${index}`}
               key={index}
               data-index={index}
-              onClick={() => {
+              onClick={(e) => {
                 if (props.focusOnSelect) {
                   goToSlide(index);
                 }

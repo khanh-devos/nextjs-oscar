@@ -1,11 +1,11 @@
 'use client'
 
-import React, { RefObject, useEffect, useState } from "react"
+import React, { Dispatch, RefObject, SetStateAction, useEffect, useState } from "react"
 import Link from 'next/link';
 import Image from "next/image";
 import { useForm } from "@formspree/react";
 import typo1 from "../imgs/portfolio/typo1.png"
-import Glowing from "./portfolio/glowing/glowing";
+import Reflection from "./portfolio/reflection/Reflecting";
 
 export const MyHeader1 = ({text} : {text: string}) => {
     return <h1 className="
@@ -56,20 +56,22 @@ export const MyParagraph3 = ({text} : {text: string}) => {
 
 export const MyBtn1 = ({
   text,
-  toggle,
+  style,
   id,
   callback
 } : {
   text: string,
-  toggle: string,
-  id: string,
+  style?: {},
+  id?: string,
   callback: any
 }) => {
 
 
-    return <button className={`text-black m-0 p-0
-    ${toggle} 
-    ${id !== '0' ? '': 'underline font-bold'}`} id={id} onClick={callback}>
+    return <button 
+      className={`text-black m-0 p-0`}
+      style={{...style}}
+    
+      id={id} onClick={callback}>
         {text}
     </button>
 }
@@ -103,22 +105,18 @@ export const MyGridSection = ({
 }
 
 export const MirroredImage = ({
-  url, alt, height, text, links, id
+  url, alt, height, id
 }:{
   url: string,
   alt: string,
   height: string,
-  text: string,
-  links: Array<string>,
   id: string
 }) => {
   
   const center = [Number(window.innerWidth)/2, Number(window.innerHeight)/2];
-  const maxAngleX = 0, maxAngleY = -0;
-  const maxAngleX2 = 1.5 * -10, maxAngleY2 = 1.5 * -10;
+  const maxAngleX = 1.5 * 10, maxAngleY = 1.5 * -10;
   
-  const imageRef: RefObject<HTMLImageElement> = React.createRef();
-  const divRef: RefObject<HTMLDivElement> = React.createRef();
+  const divRef: RefObject<HTMLDivElement> = React.useRef(null);
 
   let halt: boolean = false;
   const removePerspective = () => {halt = true}
@@ -128,7 +126,6 @@ export const MirroredImage = ({
   const showMousePos = (e: any) => {
     // no perspective in case of mouse over or mobile view
     if (halt || Number(window.innerWidth) < 768) {
-      if (imageRef.current) imageRef.current.style.transform = `none`;
       if (divRef.current) divRef.current.style.transform = `none`;
       return
     }
@@ -137,50 +134,44 @@ export const MirroredImage = ({
 
 
     const stumbling = [
-        ((Number(e.clientX) - center[0]) / center[0]) * maxAngleX, 
-        ((Number(e.clientY) - center[1]) / center[1]) * maxAngleY
-    ]
-
-    const stumbling2 = [
-      ((Number(e.clientX) - center[0]) / center[0]) * maxAngleX2, 
-      ((Number(e.clientY) - center[1]) / center[1]) * maxAngleY2
+      ((Number(e.clientX) - center[0]) / center[0]) * maxAngleX, 
+      ((Number(e.clientY) - center[1]) / center[1]) * maxAngleY
     ]
 
     // setMousePos(stumbling);
     const transform = `rotateX(${stumbling[1]}deg) rotateY(${stumbling[0]}deg)`;
-    const transform2 = `rotateX(${stumbling2[1]}deg) rotateY(${stumbling2[0]}deg)`;
-    if (imageRef.current) imageRef.current.style.transform = transform;
     
     if (divRef.current) {
-      divRef.current.style.transform = transform2;
+      divRef.current.style.transform = transform;
       divRef.current.style.zIndex = newZ;
     }
     
   }
 
 
-  
-  
-  if (document.readyState === 'complete') {
-    if (!halt) {
+  useEffect(() => {
+    return () => {
       document.querySelector('body')?.addEventListener('mousemove', showMousePos);
     }
-    else {
-      document.querySelector('body')?.removeEventListener('mousemove', showMousePos);
-    }
-  } 
+     
+  }, [])
+  
+  
   
   const responsiveMargin = Number(window.innerWidth) > 768 ? '70px': '40px';
   const responsiveHeight = Number(window.innerWidth) > 768 ? `${height}px`: '300px';
 
   return (
+  
   <div className="shadow-black" 
       style={{
         margin: responsiveMargin,
         perspective: '1000px',
       }}
       draggable={false}
-  >
+  > 
+    
+    <Reflection angle={100} sideColor='skyblue' borderRadius="20%">
     <div
       ref={divRef}
       onMouseEnter={removePerspective}
@@ -194,10 +185,15 @@ export const MirroredImage = ({
         outline: `auto lightgreen`,
         border: '3px solid red',
         boxShadow: '30px 30px 100px rgba(100,100,150, 0.9)',
+        padding: '0',
       }}
     >
+      
     </div>
+    </Reflection>
+    
 
+    
     <div
       style={{
         position: 'absolute',
@@ -213,7 +209,6 @@ export const MirroredImage = ({
     >
       
       <Image
-          ref={imageRef}
           onMouseEnter={removePerspective}
           onMouseLeave={addPerspective}
           draggable={false} 
@@ -223,26 +218,13 @@ export const MirroredImage = ({
           fill
           sizes="100%"
           style={{
-            objectFit: 'fill', zIndex: '5', borderRadius: '50%',
+            objectFit: 'fill', borderRadius: '50%',
           }}
       />
     </div>
-
-
-    <div className="text-center w-full mt-16 flex gap-1" draggable={false}>
-      <Glowing>
-      <MyLinearGradient stroke="white" color="lightgreen" 
-        edgeColor="rgba(0,0,0,0)" padding="5">
-        <p className="text-black m-0" >{text}
-        {' '}
-        <MyLink pathname={links[0]} title="Demo" />
-        {" | "}
-        <MyLink pathname={links[1]} title="Source" />
-        </p>
-      </MyLinearGradient>
-      </Glowing>
-    </div>
+    
   </div>
+
   )
 }
 
@@ -309,6 +291,7 @@ export const MyLinearGradient = ({
     }, []);
 
     return (
+    
     <div
       style={{
         background: `linear-gradient(to right, ${edgeColor}, ${color}, ${color}, ${color}, ${color}, ${edgeColor})`, 
@@ -321,7 +304,8 @@ export const MyLinearGradient = ({
         margin: `auto`
         }}>
         {children}
-    </div>)
+    </div>
+    )
 }
 
 
@@ -449,7 +433,7 @@ export const MyForm = ({
 
   return (
     <form
-      className=""
+      className="py-4"
       style={{textAlign: 'center', position: 'relative', margin: 'auto'}}
       onSubmit={myHandleSubmit}
     >
@@ -458,7 +442,9 @@ export const MyForm = ({
       <br/>
       <br/>
 
-      <MyFormBtn text="SEND" />
+      <Reflection angle={100} color="white" sideColor="black" borderRadius="5px">
+        <MyFormBtn text="SEND" />
+      </Reflection>
 
     </form>
   )
@@ -491,7 +477,6 @@ export const MyFormBtn = ({
     background: `skyblue url(${typo1.src}) no-repeat`,
     backgroundBlendMode: 'multiply',
     color: 'rgba(0,0,0, 0.5)',
-    marginBottom: '5%'
   }}
   onMouseOver={handleMouseOver}
   onMouseOut={handleMouseOut}
