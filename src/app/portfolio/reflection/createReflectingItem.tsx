@@ -33,8 +33,10 @@ export const createReflectingChild = (
       {
         key: uuidv4(),
         style: {
-          position: 'relative', zIndex: '10', 
-          margin: state.margin, padding: '0',
+          position: 'relative', 
+          zIndex: '10', 
+          margin: state.margin,
+          padding: '0',
           width: 'fit-content', height: 'fit-content',
         }
       },
@@ -45,23 +47,34 @@ export const createReflectingChild = (
 
   }
   else {
-
-    const dimentions = state.position ? {
-      position: state.position,
-      top: '0', left: '0', bottom: '0', right: '0'
-    } : {}
-
     const reflectingItem = React.createElement('div', {
       ref: lightRef,
-      style: {...dimentions,
+      style: {
+        position: 'absolute',
+        top: '0', left: '0', bottom: '0', right: '0',
         width: '100%', height: '100%',
         zIndex: '100',
         opacity: '0.5',
-        borderRadius: state.borderRadius,
+        borderRadius: state.borderRadius || 'inherit',
       }
     })
 
-    return React.cloneElement(item, {key: uuidv4()}, reflectingItem);
+    const parent = React.createElement(
+      'div',
+      {
+        style: {
+          position: 'relative',
+          zIndex: '10', 
+          padding: '0',
+          width: '100%', height: '100%',
+        }
+      },
+      [reflectingItem]
+    )
+
+
+
+    return React.cloneElement(item, {key: uuidv4()}, parent);
   }
 
 }

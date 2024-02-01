@@ -3,7 +3,7 @@ import {v4 as uuidv4} from 'uuid';
 import { MirroredImage, MyLinearGradient, MyLink } from "@/app/styledComponents";
 // import Carousel from 'react-multi-carousel';
 import Carousel from "../carousel_Yizhuang/Carousel";
-import Reflection from "../reflection/Reflecting";
+import Reflection from "../reflection/Reflection";
 // import 'react-multi-carousel/lib/styles.css';
 import { desktopProjects } from "./data";
 
@@ -31,7 +31,7 @@ const Projects = () => {
       infinite={true} 
       fading={true}
       flying={true}
-      autoPlay={true}
+      autoPlay={false}
       rewind={false}
       responsive={responsive}
       arrows={false}
