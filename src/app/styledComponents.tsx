@@ -1,6 +1,6 @@
 'use client'
 
-import React, { RefObject, useEffect, useState } from "react"
+import React, { createRef, RefObject, useEffect, useState } from "react"
 import Link from 'next/link';
 import Image from "next/image";
 import { useForm } from "@formspree/react";
@@ -149,7 +149,7 @@ export const MirroredImage = ({
 }) => {
   
   
-  const divRef: RefObject<HTMLDivElement> = React.useRef(null);
+  const divRef: RefObject<HTMLDivElement> = createRef();
 
   let halt: boolean = false;
   const removePerspective = () => {halt = true}
@@ -180,24 +180,24 @@ export const MirroredImage = ({
   > 
     
     <Reflection angle={100} sideColor='skyblue' borderRadius="20%" position="absolute">
-    <div
-      ref={divRef}
-      onMouseEnter={removePerspective}
-      onMouseLeave={addPerspective}
-      style={{
-        position: 'relative',
-        width:'100%',
-        margin: 'auto',
-        height: responsiveHeight, 
-        borderRadius: '20%',
-        outline: `auto lightgreen`,
-        border: '3px solid red',
-        boxShadow: '30px 30px 100px rgba(100,100,150, 0.9)',
-        padding: '0',
-      }}
-    >
-      
-    </div>
+      <div
+        ref={divRef}
+        onMouseEnter={removePerspective}
+        onMouseLeave={addPerspective}
+        style={{
+          position: 'relative',
+          width:'100%',
+          margin: 'auto',
+          height: responsiveHeight, 
+          borderRadius: '20%',
+          outline: `auto lightgreen`,
+          border: '3px solid red',
+          boxShadow: '30px 30px 100px rgba(100,100,150, 0.9)',
+          padding: '0',
+        }}
+      >
+        
+      </div>
     </Reflection>
     
 

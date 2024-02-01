@@ -33,8 +33,10 @@ export const createReflectingChild = (
       {
         key: uuidv4(),
         style: {
-          position: 'relative', zIndex: '10', 
-          margin: state.margin, padding: '0',
+          position: 'relative', 
+          zIndex: '10', 
+          margin: state.margin,
+          padding: '0',
           width: 'fit-content', height: 'fit-content',
         }
       },
@@ -47,7 +49,6 @@ export const createReflectingChild = (
   else {
     const reflectingItem = React.createElement('div', {
       ref: lightRef,
-      key: uuidv4(),
       style: {
         position: 'absolute',
         top: '0', left: '0', bottom: '0', right: '0',
@@ -61,10 +62,10 @@ export const createReflectingChild = (
     const parent = React.createElement(
       'div',
       {
-        key: uuidv4(),
         style: {
-          position: 'relative', zIndex: '10', 
-          margin: state.margin, padding: '0',
+          position: 'relative',
+          zIndex: '10', 
+          padding: '0',
           width: '100%', height: '100%',
         }
       },
