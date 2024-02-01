@@ -156,12 +156,11 @@ export const MirroredImage = ({
   const addPerspective = () => {halt = false}
 
   useEffect(() => {
-    return () => {
-      window.addEventListener('mousemove', (event) => {
-        showMousePos(event, divRef, halt)
-      });
-    }
-     
+
+    window.addEventListener('mousemove', (event) => {
+      showMousePos(event, divRef, halt)
+    });
+    
   }, [])
   
   
