@@ -160,7 +160,7 @@ export const MirroredImage = ({
     window.addEventListener('mousemove', (event) => {
       showMousePos(event, divRef, halt)
     });
-    
+
   }, [])
   
   
@@ -178,7 +178,7 @@ export const MirroredImage = ({
       draggable={false}
   > 
     
-    {/* <Reflection angle={100} sideColor='skyblue' borderRadius="20%" position="absolute"> */}
+    <Reflection angle={100} sideColor='skyblue' borderRadius="20%" position="absolute">
       <div
         ref={divRef}
         onMouseEnter={removePerspective}
@@ -197,7 +197,7 @@ export const MirroredImage = ({
       >
         
       </div>
-    {/* </Reflection> */}
+    </Reflection>
     
 
     
