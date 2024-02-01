@@ -1,8 +1,12 @@
-import { MirroredImage } from "@/app/styledComponents";
+
+import {v4 as uuidv4} from 'uuid';
+import { MirroredImage, MyLinearGradient, MyLink } from "@/app/styledComponents";
 // import Carousel from 'react-multi-carousel';
 import Carousel from "../carousel_Yizhuang/Carousel";
+import Reflection from "../reflection/Reflecting";
 // import 'react-multi-carousel/lib/styles.css';
 import { desktopProjects } from "./data";
+
 
 
 
@@ -27,7 +31,7 @@ const Projects = () => {
       infinite={true} 
       fading={true}
       flying={true}
-      autoPlay={true}
+      autoPlay={false}
       rewind={false}
       responsive={responsive}
       arrows={false}
@@ -36,11 +40,15 @@ const Projects = () => {
         [...desktopProjects].slice().map((project) => {
         
         return (
-          <button onDoubleClick={() => window.open(project.url)}
-            className="relative select-none mt-10" key={project.id}
+        <div className="my-10" key={uuidv4()}>
+          
+          <button
+            onDoubleClick={() => window.open(project.url)}
+            className="relative select-none" key={project.id}
             style={{
               minWidth: '100%',
-              padding: '0 2%'
+              padding: '0 2%',
+              background: 'none'
             }}
             >
               <MirroredImage
@@ -48,11 +56,34 @@ const Projects = () => {
                 url={project.img}
                 alt="ebike"
                 height="400"
-                text={project.description}
-                links={[project.url, project.git]}
               />
               
+              
           </button>
+
+          <div className="text-center w-full mt-6 flex gap-1" draggable={true}
+            style={{
+              minWidth: '100%',
+              padding: '0 10%'
+            }}
+          >
+            
+          <Reflection angle={100} color="lightgreen" sideColor="darkgreen" 
+            borderRadius='5px'>
+            <MyLinearGradient stroke="white" color="lightgreen" 
+              edgeColor="rgba(0,0,0,0)" padding="5">
+              <p className="text-black" >{project.description}
+              {' '}
+              <MyLink pathname={project.url} title="Demo" />
+              {" | "}
+              <MyLink pathname={project.git} title="Source" />
+              </p>
+            </MyLinearGradient>
+            
+          </Reflection>
+          </div>
+        </div>
+        
         )})
       }
       

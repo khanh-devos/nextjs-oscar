@@ -1,40 +1,52 @@
-import { MyBtn1, MyLinearGradient } from "@/app/styledComponents";
 import { Dispatch, SetStateAction } from "react";
+import { MyBtn1, MyLinearGradient } from "@/app/styledComponents";
+import { v4 } from "uuid";
+import Reflection from "../reflection/Reflecting";
 
+
+
+const PAGESNAME = ['Home', 'Projects', 'Contact']
 
 const Navigation = ({
+  show,
   setShow
 } : {
+  show: Array<number>,
   setShow: Dispatch<SetStateAction<Array<number>>>
 }) => {
-  const handleCallback = (e: any): void => {
-    const currentID = e.currentTarget.id;
-
-    const es = document.getElementsByClassName('header');
-    Object.values(es).forEach((e) => {
-      if (e.getAttribute('id') === currentID) {
-        e.classList.add('underline')
-        e.classList.add('font-bold')
-        setShow((state) => state.map((_, index) => index === Number(currentID) ? 1: 0 ));
-      }
-      else {
-        e.classList.remove('underline')
-        e.classList.remove('font-bold')
-      }
-    })
+  const handleCallback = (e: Event, num: number, index: number ): void => {
+    const newShow = [0, 0, 0];
+    newShow[index] = 1;
+    setShow(newShow)
 
   }
 
   return (
   <div className="flex justify-end">
     <div className="fixed top-4 right-4 z-10">
+
+    <Reflection angle={100} color='white' sideColor='black' borderRadius="5px">
       <MyLinearGradient stroke="lavender" color="rgba(0,0,0,0)" edgeColor="white" padding="0" >
-        <div className="text-black flex flex-row gap-2 px-1">
-          <MyBtn1 text="Home" toggle="header" id="0" callback={handleCallback} />
-          <MyBtn1 text="Projects" toggle="header" id="1" callback={handleCallback} />
-          <MyBtn1 text="Contact" toggle="header" id="2" callback={handleCallback} />
+        <div className="top-0 left-0 text-black flex flex-row gap-2 px-1 z-20">
+
+        {
+          show.map((num: number, index: number) => (
+            <MyBtn1 
+              key={v4()}
+              text={PAGESNAME[index]} 
+              callback={(e: Event) => handleCallback(e, num, index)} 
+              style={num ? {
+                textDecoration: 'underline',
+                fontWeight: 'bold'
+              }: {}}
+            />
+          ))
+        }
+        
         </div>
+        
       </MyLinearGradient>
+    </Reflection>  
     </div>
   </div>
   )
