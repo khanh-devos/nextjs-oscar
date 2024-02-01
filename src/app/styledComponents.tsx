@@ -104,6 +104,41 @@ export const MyGridSection = ({
     </div>)
 }
 
+
+const showMousePos = (
+  e: MouseEvent, 
+  divRef: RefObject<HTMLDivElement>,
+  halt: boolean
+) => {
+  // no perspective in case of mouse over or mobile view
+  const center = [Number(window.innerWidth)/2, Number(window.innerHeight)/2];
+  const maxAngleX = 1.5 * 10, maxAngleY = 1.5 * -10;
+
+
+  if (halt || Number(window.innerWidth) < 768) {
+    if (divRef.current) divRef.current.style.transform = `none`;
+    return
+  }
+
+  const newZ = e.clientY - center[1] > 0 ? '6' : '6';
+
+
+  const stumbling = [
+    ((Number(e.clientX) - center[0]) / center[0]) * maxAngleX, 
+    ((Number(e.clientY) - center[1]) / center[1]) * maxAngleY
+  ]
+
+  // setMousePos(stumbling);
+  const transform = `rotateX(${stumbling[1]}deg) rotateY(${stumbling[0]}deg)`;
+  
+  if (divRef.current) {
+    divRef.current.style.transform = transform;
+    divRef.current.style.zIndex = newZ;
+  }
+  
+}
+
+
 export const MirroredImage = ({
   url, alt, height, id
 }:{
@@ -113,8 +148,6 @@ export const MirroredImage = ({
   id: string
 }) => {
   
-  const center = [Number(window.innerWidth)/2, Number(window.innerHeight)/2];
-  const maxAngleX = 1.5 * 10, maxAngleY = 1.5 * -10;
   
   const divRef: RefObject<HTMLDivElement> = React.useRef(null);
 
@@ -122,36 +155,11 @@ export const MirroredImage = ({
   const removePerspective = () => {halt = true}
   const addPerspective = () => {halt = false}
 
-
-  const showMousePos = (e: any) => {
-    // no perspective in case of mouse over or mobile view
-    if (halt || Number(window.innerWidth) < 768) {
-      if (divRef.current) divRef.current.style.transform = `none`;
-      return
-    }
-
-    const newZ = e.clientY - center[1] > 0 ? '6' : '6';
-
-
-    const stumbling = [
-      ((Number(e.clientX) - center[0]) / center[0]) * maxAngleX, 
-      ((Number(e.clientY) - center[1]) / center[1]) * maxAngleY
-    ]
-
-    // setMousePos(stumbling);
-    const transform = `rotateX(${stumbling[1]}deg) rotateY(${stumbling[0]}deg)`;
-    
-    if (divRef.current) {
-      divRef.current.style.transform = transform;
-      divRef.current.style.zIndex = newZ;
-    }
-    
-  }
-
-
   useEffect(() => {
     return () => {
-      document.querySelector('body')?.addEventListener('mousemove', showMousePos);
+      window.addEventListener('mousemove', (event) => {
+        showMousePos(event, divRef, halt)
+      });
     }
      
   }, [])
@@ -171,7 +179,7 @@ export const MirroredImage = ({
       draggable={false}
   > 
     
-    <Reflection angle={100} sideColor='skyblue' borderRadius="20%">
+    <Reflection angle={100} sideColor='skyblue' borderRadius="20%" position="absolute">
     <div
       ref={divRef}
       onMouseEnter={removePerspective}
