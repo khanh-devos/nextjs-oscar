@@ -2,7 +2,7 @@ import { Children } from "react";
 import * as React from 'react';
 import { ReflectionProps, ReflectionState } from "./types";
 
-import {showReflection} from "./utils/showSunLight";
+import {showReflection} from "./utils/showLight";
 import { createReflectingChild } from "./createReflectingItem";
  
 

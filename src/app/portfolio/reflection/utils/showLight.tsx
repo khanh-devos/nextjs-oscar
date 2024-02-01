@@ -1,4 +1,5 @@
 import { ReflectionState } from "../types";
+import * as React from 'react';
 
 
 export const showReflection = (
