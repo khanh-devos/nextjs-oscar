@@ -1,22 +1,21 @@
 import { v4 as uuidv4 } from 'uuid';
-import * as React from 'react';
+import { cloneElement, createElement, ReactElement, RefObject } from 'react';
 import { ReflectionState } from './types';
 
 
 
 export const createReflectingChild = (
-  item: React.ReactElement|any ,
+  item: ReactElement|any ,
   state: ReflectionState, 
-  lightRef: React.RefObject<any>,
-  setState: React.Dispatch<React.SetStateAction<ReflectionState>>
-):React.ReactElement => {
+  lightRef: RefObject<any>
+): ReactElement => {
   
   // Check item is a built-in HTMLElement or custom component by its type name
   // Built-in HTMLElement: insert a new glowing item into its innnerHTML.
   // Custom component: insert a relative div containing an absolute glowing item
 
   if (item.type.name) {
-    const reflectingItem = React.createElement('div', {
+    const reflectingItem = createElement('div', {
       ref: lightRef,
       key: uuidv4(),
       style: {
@@ -29,7 +28,7 @@ export const createReflectingChild = (
       }
     })
 
-    const parent = React.createElement('div', {
+    const parent = createElement('div', {
       key: uuidv4(),
       style: {
         position: 'relative', zIndex: '10', 
@@ -50,7 +49,7 @@ export const createReflectingChild = (
       top: '0', left: '0', bottom: '0', right: '0'
     } : {}
 
-    const reflectingItem = React.createElement('div', {
+    const reflectingItem = createElement('div', {
       ref: lightRef,
       style: {...dimentions,
         width: '100%', height: '100%',
@@ -60,7 +59,7 @@ export const createReflectingChild = (
       }
     })
 
-    return React.cloneElement(item, {key: uuidv4()}, reflectingItem);
+    return cloneElement(item, {key: uuidv4()}, reflectingItem);
   }
 
 }

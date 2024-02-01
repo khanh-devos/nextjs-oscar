@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, lazy, Dispatch, SetStateAction } from "react"
+import { useEffect, useState } from "react"
 import ErrorBoundary from "../ErrorBoundary"
 import Contact from "./components/Contact"
 import Home from "./components/Home"

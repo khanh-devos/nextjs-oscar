@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
 import { ReflectionState } from "../types";
 
 
@@ -14,11 +13,9 @@ export const showReflection = (
 
 
     const WIDTH = window.innerWidth || 1500;
-    const HEIGHT = window.innerHeight || 1500;
   
   
     const a = Number(event.clientX)/WIDTH * 100;
-    const y = Number(event.clientY)/HEIGHT * 100;
       
   
     if ((a < 30 || a > 70)) {

@@ -1,4 +1,4 @@
-import { ReactNode, RefObject } from "react";
+import { ReactNode } from "react";
 
 export type ReflectionProps = {
   children?: ReactNode,

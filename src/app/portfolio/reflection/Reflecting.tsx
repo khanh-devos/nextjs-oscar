@@ -60,27 +60,27 @@ const Reflection = ({
   }, [])
 
 
-  const createSun = () => {
-    return (<div 
-      style={{
-        position: 'absolute', top: '0', left: '0',
-        width: '100%', height: '100%',
-        zIndex: '200',
-        transform: 'translateX(100px)',
-        backgroundImage: 'radial-gradient(circle, whitesmoke 3%, lavender 4%, transparent 20%)',
-      }}  
-    ></div>)
-  } 
+  // const createSun = () => {
+  //   return (<div 
+  //     style={{
+  //       position: 'absolute', top: '0', left: '0',
+  //       width: '100%', height: '100%',
+  //       zIndex: '200',
+  //       transform: 'translateX(100px)',
+  //       backgroundImage: 'radial-gradient(circle, whitesmoke 3%, lavender 4%, transparent 20%)',
+  //     }}  
+  //   ></div>)
+  // } 
 
   
 
   return <>
     {
-      items.map((item: React.ReactElement|any, i: number) => {
+      items.map((item: React.ReactElement|any) => {
         // if (i === 0)
         if (state.isMobileView) return item;
 
-        return createReflectingChild(item, state, lightRef, setState);
+        return createReflectingChild(item, state, lightRef);
         
       })
     }
