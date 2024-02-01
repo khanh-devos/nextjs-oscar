@@ -1,6 +1,6 @@
 import { MyHeader1, MyLinearGradient,
   MyParagraph1, MyParagraph2 } from "@/app/styledComponents";
-import Reflection from "../reflection/Reflecting";
+import Reflection from "../reflection/Reflection";
 
 
 const Home = () => {

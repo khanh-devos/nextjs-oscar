@@ -1,5 +1,5 @@
 import { MyLinearGradient, MyLink } from "@/app/styledComponents"
-import Reflection from "../reflection/Reflecting"
+import Reflection from "../reflection/Reflection"
 
 
 const Footer = () => {

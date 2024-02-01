@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { MyBtn1, MyLinearGradient } from "@/app/styledComponents";
 import { v4 } from "uuid";
-import Reflection from "../reflection/Reflecting";
+import Reflection from "../reflection/Reflection";
 
 
 

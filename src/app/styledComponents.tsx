@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from "next/image";
 import { useForm } from "@formspree/react";
 import typo1 from "../imgs/portfolio/typo1.png"
-import Reflection from "./portfolio/reflection/Reflecting";
+import Reflection from "./portfolio/reflection/Reflection";
 
 export const MyHeader1 = ({text} : {text: string}) => {
     return <h1 className="

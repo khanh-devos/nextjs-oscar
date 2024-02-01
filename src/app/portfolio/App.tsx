@@ -19,7 +19,6 @@ const App = () => {
 
   
   useEffect(() => {
-    console.log('mount??')
     setImage('lavender');
     setTimeout(() => setShow([1, 0, 0]), 300);
   }, [])
