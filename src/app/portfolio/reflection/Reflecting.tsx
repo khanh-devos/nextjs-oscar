@@ -42,7 +42,7 @@ const Reflection = ({
 
   const checkMobileView = () => {
 
-    if (Number(window.innerWidth) <= 100) {
+    if (Number(window.innerWidth) <= 1100) {
       setState((state) => ({...state, isMobileView: true}))
     }
     else setState((state) => ({...state, isMobileView: false}))
