@@ -1,11 +1,9 @@
 
 import {v4 as uuidv4} from 'uuid';
 import { MirroredImage, MyLinearGradient, MyLink } from "@/app/styledComponents";
-// import Carousel from 'react-multi-carousel';
 import Carousel from "../carousel_Yizhuang/Carousel";
-import Reflection from "../reflection/Reflection";
-// import 'react-multi-carousel/lib/styles.css';
 import { desktopProjects } from "./data";
+import { Reflection } from '@khanh-devos/react-reflection';
 
 
 
@@ -68,8 +66,7 @@ const Projects = () => {
             }}
           >
             
-          <Reflection angle={100} color="lightgreen" sideColor="darkgreen" 
-            borderRadius='5px'>
+          <Reflection angle={100} color="lightgreen" sideColor="darkgreen" borderRadius='5px'>
             <MyLinearGradient stroke="white" color="lightgreen" 
               edgeColor="rgba(0,0,0,0)" padding="5">
               <p className="text-black" >{project.description}

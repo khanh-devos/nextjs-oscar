@@ -1,11 +1,11 @@
 import { MyLinearGradient, MyLink } from "@/app/styledComponents"
-import Reflection from "../reflection/Reflection"
+import { Reflection } from "@khanh-devos/react-reflection"
 
 
 const Footer = () => {
   return (
   <div className="fixed bottom-6 right-4" >
-    <Reflection angle={100} color="white" sideColor="red" borderRadius="5px">
+    <Reflection angle={100} color="white" sideColor="red" borderRadius="10px">
       <MyLinearGradient stroke="lavender" color="transparent" 
       edgeColor="white" padding="0">    
 

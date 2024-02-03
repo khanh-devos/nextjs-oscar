@@ -1,6 +1,7 @@
 import { MyHeader1, MyLinearGradient,
   MyParagraph2 } from "@/app/styledComponents";
-import Reflection from "../reflection/Reflection";
+// import Reflection from "../Reflection/Reflection";
+import { Reflection } from '@khanh-devos/react-reflection';
 
 
 const Home = () => {
