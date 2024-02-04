@@ -34,12 +34,13 @@ const App = () => {
         minHeight: '100vh',
       }}>
     <ErrorBoundary>
-      
+
       <Navigation show={show} setShow={setShow} />
 
       <MySlidingShow show={show[0]}>
         {Boolean(show[0]) && <Home />}
       </MySlidingShow>
+    
 
       <MySlidingShow show={show[1]}>
         {Boolean(show[1]) && <Projects />}
