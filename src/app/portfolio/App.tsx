@@ -13,14 +13,16 @@ import Footer from "./components/Footer"
 
 
 const App = () => {
-  const [show, setShow] = useState<number[]>([0, 0, 0]);
-  const [image, setImage] = useState('grey');
+  const [show, setShow] = useState<Array<number>>([0, 0, 0]);
+  const [image, setImage] = useState<string>('lavender');
   
 
   
   useEffect(() => {
     setImage('lavender');
-    setTimeout(() => setShow([1, 0, 0]), 300);
+    setTimeout(() => {
+      setShow([1, 0, 0])
+    }, 300);
   }, [])
   
   return (

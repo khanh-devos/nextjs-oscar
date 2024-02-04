@@ -1,6 +1,7 @@
 import { MyHeader1, MyLinearGradient,
-  MyParagraph1, MyParagraph2 } from "@/app/styledComponents";
-import Reflection from "../reflection/Reflection";
+  MyParagraph2 } from "@/app/styledComponents";
+// import Reflection from "../Reflection/Reflection";
+import { Reflection } from '@khanh-devos/react-reflection';
 
 
 const Home = () => {
@@ -16,15 +17,13 @@ const Home = () => {
       >
 
         <MyHeader1 text="Hi, I am Khanh." />
-
-        <MyParagraph1 text="A remote full-stack developer." />
       
-        <MyParagraph2 text='I am a motorbiker || an e-biker. A cool wind while riding is a piece of my favor. I enjoy processing things with either JavaScript or TypeScript (React & Nextjs). I also know Rails on Ruby and AI (Python). If you need a remote developer, just email me "dreamproperty.khanh@gmail.com".' />
+        <MyParagraph2 text='I am a remote full-stack web developer || a motorbiker || an e-biker. A cool wind while riding is a piece of my favor. I enjoy coding either FE (React & Nextjs, TS & JS) or BE (Rails on Ruby, Python-AI).' />
 
         <MyParagraph2 text='P/S:' />
-        <MyParagraph2 text='- This responsive portfolio was written with Nextjs & Typescript.' />
-        <MyParagraph2 text='- Extra responsive fading-flying feature added in React Carousel in the page "Projects".' />
-        <MyParagraph2 text='- The background image was made by Typograms.' />
+        <MyParagraph2 text='- Written with Nextjs & Typescript.' />
+        <MyParagraph2 text='- 3 features added in "Projects" : sliding, fading, and flying.' />
+        <MyParagraph2 text='- Special feature implemented by my own library : REFLECTION.' />
       
         <br/>
 

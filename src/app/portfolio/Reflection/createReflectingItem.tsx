@@ -1,12 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
 import * as React from 'react';
-import { ReflectionState } from './types';
+import Reflection from './Reflection';
 
 
 
 export const createReflectingChild = (
   item: React.ReactElement|any ,
-  state: ReflectionState, 
+  reflection: Reflection, 
   lightRef: React.RefObject<any>
 ): React.ReactElement => {
   
@@ -24,7 +24,7 @@ export const createReflectingChild = (
         width: '100%', height: '100%',
         zIndex: '100',
         opacity: '0.5',
-        borderRadius: state.borderRadius || 'inherit',
+        borderRadius: reflection.props.borderRadius || 'inherit',
       }
     })
 
@@ -34,8 +34,8 @@ export const createReflectingChild = (
         key: uuidv4(),
         style: {
           position: 'relative', 
-          zIndex: '10', 
-          margin: state.margin,
+          zIndex: '0', 
+          margin: reflection.props.margin,
           padding: '0',
           width: 'fit-content', height: 'fit-content',
         }
@@ -49,19 +49,21 @@ export const createReflectingChild = (
   else {
     const reflectingItem = React.createElement('div', {
       ref: lightRef,
+      key: uuidv4(),
       style: {
         position: 'absolute',
         top: '0', left: '0', bottom: '0', right: '0',
         width: '100%', height: '100%',
         zIndex: '100',
         opacity: '0.5',
-        borderRadius: state.borderRadius || 'inherit',
+        borderRadius: reflection.props.borderRadius || 'inherit',
       }
     })
 
     const parent = React.createElement(
       'div',
-      {
+      { 
+        key: uuidv4(),
         style: {
           position: 'relative',
           zIndex: '10', 

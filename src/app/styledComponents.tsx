@@ -5,7 +5,8 @@ import Link from 'next/link';
 import Image from "next/image";
 import { useForm } from "@formspree/react";
 import typo1 from "../imgs/portfolio/typo1.png"
-import Reflection from "./portfolio/reflection/Reflection";
+import { Reflection } from "@khanh-devos/react-reflection";
+
 
 export const MyHeader1 = ({text} : {text: string}) => {
     return <h1 className="
@@ -57,22 +58,20 @@ export const MyParagraph3 = ({text} : {text: string}) => {
 export const MyBtn1 = ({
   text,
   style,
-  id,
   callback
 } : {
   text: string,
   style?: {},
-  id?: string,
-  callback: any
+  callback: any,
 }) => {
 
 
     return <button 
       className={`text-black m-0 p-0`}
       style={{...style}}
-    
-      id={id} onClick={callback}>
-        {text}
+      onClick={callback}
+    >
+      {text}
     </button>
 }
 

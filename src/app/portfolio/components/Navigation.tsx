@@ -1,7 +1,10 @@
+"use client"
+
 import { Dispatch, SetStateAction } from "react";
 import { MyBtn1, MyLinearGradient } from "@/app/styledComponents";
 import { v4 } from "uuid";
-import Reflection from "../reflection/Reflection";
+// import Reflection from "../Reflection/Reflection";
+import { Reflection } from "@khanh-devos/react-reflection";
 
 
 
@@ -14,7 +17,13 @@ const Navigation = ({
   show: Array<number>,
   setShow: Dispatch<SetStateAction<Array<number>>>
 }) => {
-  const handleCallback = (e: Event, num: number, index: number ): void => {
+
+  const handleCallback = (
+    e: MouseEvent, 
+    num: number, 
+    index: number 
+    ): void => {
+    
     const newShow = [0, 0, 0];
     newShow[index] = 1;
     setShow(newShow)
@@ -30,17 +39,19 @@ const Navigation = ({
         <div className="top-0 left-0 text-black flex flex-row gap-2 px-1 z-20">
 
         {
-          show.map((num: number, index: number) => (
-            <MyBtn1 
-              key={v4()}
-              text={PAGESNAME[index]} 
-              callback={(e: Event) => handleCallback(e, num, index)} 
-              style={num ? {
-                textDecoration: 'underline',
-                fontWeight: 'bold'
-              }: {}}
-            />
-          ))
+          show.map((num: number, index: number) => {
+            
+            return (
+              <MyBtn1 
+                key={v4()}
+                text={PAGESNAME[index]} 
+                callback={(e: MouseEvent) => handleCallback(e, num, index)} 
+                style={num > 0 ? {
+                  textDecoration: 'underline',
+                  fontWeight: 'bold'
+                }: {}}
+              />
+          )})
         }
         
         </div>

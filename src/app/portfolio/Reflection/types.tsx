@@ -1,7 +1,6 @@
-import { ReactNode } from "react";
-
-export type ReflectionProps = {
-  children?: ReactNode,
+export interface ReflectionProps {
+  children?: any,
+  myWhite?: string,
   color?: string,
   sideColor?: string,
   angle?: number,
