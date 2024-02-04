@@ -1,6 +1,6 @@
 'use client'
 
-import React, { RefObject, useEffect, useRef, useState } from "react"
+import React, { ReactNode, RefObject, useEffect, useRef, useState } from "react"
 import Link from 'next/link';
 import Image from "next/image";
 import { useForm } from "@formspree/react";
@@ -34,7 +34,11 @@ export const MyParagraph1 = ({text} : {text: string}) => {
     </p>
 }
 
-export const MyParagraph2 = ({text} : {text: string}) => {
+export const MyParagraph2 = ({
+  children,
+} : {
+  children: ReactNode,
+}) => {
   const [fontSize, setfontSize] = useState('text-base');
 
   useEffect(() => {
@@ -45,7 +49,7 @@ export const MyParagraph2 = ({text} : {text: string}) => {
 
   
   return <p className={`mt-2 mb-2 text-black ${fontSize}`}>
-      {text}
+      {children}
   </p>
 }
 
@@ -432,7 +436,7 @@ export const MyForm = ({
 
   if (state.succeeded && back) {
     return <div className="text-center">
-      <MyParagraph2 text="Your message succesfully sent."/>
+      <MyParagraph2>Your message succesfully sent.</MyParagraph2>
       <MyFormBtn callback={() => setBack(false)} text="BACK"/>
     </div>
   }
