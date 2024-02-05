@@ -181,7 +181,6 @@ export const MirroredImage = ({
       draggable={false}
   > 
     
-    <Reflection angle={100} sideColor='skyblue' borderRadius="20%" position="absolute">
       <div
         ref={divRef}
         onMouseEnter={removePerspective}
@@ -198,9 +197,10 @@ export const MirroredImage = ({
           padding: '0',
         }}
       >
-        
+        <Reflection angle={100} sideColor='skyblue' borderRadius="20%" position="absolute">
+          <div style={{minWidth: '100%', minHeight: '100%'}}></div>
+        </Reflection>
       </div>
-    </Reflection>
     
 
     
@@ -452,9 +452,7 @@ export const MyForm = ({
       <br/>
       <br/>
 
-      <Reflection angle={100} color="white" sideColor="black" borderRadius="5px">
-        <MyFormBtn text="SEND" />
-      </Reflection>
+      <MyFormBtn text="SEND" />
 
     </form>
   )
@@ -483,20 +481,22 @@ export const MyFormBtn = ({
   }
 
   return <button name="button"
-  style={{
-    background: `skyblue url(${typo1.src}) no-repeat`,
-    backgroundBlendMode: 'multiply',
-    color: 'rgba(0,0,0, 0.5)',
-  }}
-  onMouseOver={handleMouseOver}
-  onMouseOut={handleMouseOut}
-  onMouseDown={(e) => {
-    handleMouseDown(e);
-    if (callback) callback();
-  }}
-  className="
-  font-bold text-xl p-1 px-6 rounded border border-amber-200">
-    {text}
+    style={{
+      background: `skyblue url(${typo1.src}) no-repeat`,
+      backgroundBlendMode: 'multiply',
+      color: 'rgba(0,0,0, 0.5)',
+    }}
+    onMouseOver={handleMouseOver}
+    onMouseOut={handleMouseOut}
+    onMouseDown={(e) => {
+      handleMouseDown(e);
+      if (callback) callback();
+    }}
+    className="rounded border border-amber-200"
+  >
+    <Reflection angle={100} color="white" sideColor="black" borderRadius="5px">
+      <div className="text-neutral-600 font-bold text-xl p-1 px-6">{text}</div>
+    </Reflection>
   </button>
 }
 

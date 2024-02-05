@@ -3,7 +3,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { MyBtn1, MyLinearGradient } from "@/app/styledComponents";
 import { v4 } from "uuid";
-// import Reflection from "../Reflection/Reflection";
 import { Reflection } from "@khanh-devos/react-reflection";
 
 
