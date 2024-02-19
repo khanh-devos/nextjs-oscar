@@ -308,7 +308,7 @@ export const MyLinearGradient = ({
       draggable={false}
       style={{
         background: `linear-gradient(to right, ${edgeColor}, ${color}, ${color}, ${color}, ${color}, ${edgeColor})`, 
-        
+        border: `0.1px solid ${stroke}`,
         padding: `2% ${resPadding}%`,
         borderRadius: borderRadius || '10px',
         boxShadow: '30px 30px 60px rgba(100,100,150, .4)',
