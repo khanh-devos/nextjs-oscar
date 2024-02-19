@@ -35,7 +35,7 @@ const Navigation = ({
 
     <Reflection angle={100} color='white' sideColor='black' borderRadius="5px">
       <MyLinearGradient stroke="lavender" color="rgba(0,0,0,0)" edgeColor="white" padding="0" >
-        <div className="top-0 left-0 text-black flex flex-row gap-2 px-1 z-20">
+        <div className="top-0 left-0 text-black flex flex-row gap-2 px-1 z-10">
 
         {
           show.map((num: number, index: number) => {

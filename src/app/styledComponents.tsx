@@ -197,7 +197,8 @@ export const MirroredImage = ({
           padding: '0',
         }}
       >
-        <Reflection angle={100} sideColor='skyblue' borderRadius="20%" position="absolute">
+        
+        <Reflection angle={100} sideColor='skyblue' borderRadius="20%">
           <div style={{minWidth: '100%', minHeight: '100%'}}></div>
         </Reflection>
       </div>
@@ -279,14 +280,15 @@ export const MyLinearGradient = ({
     color,
     edgeColor,
     stroke,
-
+    borderRadius,
     padding
 }:{
     children: React.ReactNode,
     color: string,
     edgeColor: string,
-    stroke: string,
-    padding: string
+    stroke?: string,
+    padding: string,
+    borderRadius?: string,
 }) => {
 
     const [resPadding, setResPadding] = useState(padding);
@@ -300,14 +302,17 @@ export const MyLinearGradient = ({
       }
     }, []);
 
+    
+
     return (
     
     <div
+      draggable={false}
       style={{
         background: `linear-gradient(to right, ${edgeColor}, ${color}, ${color}, ${color}, ${color}, ${edgeColor})`, 
-        border: `1px solid ${resStroke}`,
+        
         padding: `2% ${resPadding}%`,
-        borderRadius: '10px',
+        borderRadius: borderRadius || '10px',
         boxShadow: '30px 30px 60px rgba(100,100,150, .4)',
         width: 'fit-content',
         minWidth: '70%',
@@ -468,6 +473,7 @@ export const MyFormBtn = ({
   const handleMouseOver = (e: any) => {
     e.target.style.background = `orange url(${typo1.src}) no-repeat`;
     e.target.style.backgroundBlendMode = 'multiply';
+    e.target.style.borderRadius = '7px';
   }
 
   const handleMouseOut = (e: any) => {
@@ -485,6 +491,7 @@ export const MyFormBtn = ({
       background: `skyblue url(${typo1.src}) no-repeat`,
       backgroundBlendMode: 'multiply',
       color: 'rgba(0,0,0, 0.5)',
+      borderRadius: '7px'
     }}
     onMouseOver={handleMouseOver}
     onMouseOut={handleMouseOut}
@@ -492,10 +499,12 @@ export const MyFormBtn = ({
       handleMouseDown(e);
       if (callback) callback();
     }}
-    className="rounded border border-amber-200"
+    className="border border-amber-200"
   >
-    <Reflection angle={100} color="white" sideColor="black" borderRadius="5px">
-      <div className="text-neutral-600 font-bold text-xl p-1 px-6">{text}</div>
+    <Reflection angle={100} color="white" sideColor="black" borderRadius="7px">
+      <div className="text-neutral-600 font-bold text-xl p-1 px-6"
+        style={{borderRadius: '7px'}}
+      >{text}</div>
     </Reflection>
   </button>
 }

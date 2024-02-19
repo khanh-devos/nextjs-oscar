@@ -35,7 +35,7 @@ body {
   padding: 0;
   background: lavender;
   /* background: linear-gradient(to right, rgba(255,255,255, 0), white , rgba(255,255,255, 0)); */
-  overflow: auto;
+  overflow: 'auto';
   min-width: 100%;
   min-height: 100vh;
 }
