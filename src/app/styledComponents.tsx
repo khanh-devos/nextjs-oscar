@@ -109,35 +109,21 @@ export const MyGridSection = ({
 
 
 const showMousePos = (
-  e: MouseEvent, 
-  divRef: RefObject<HTMLDivElement>,
-  halt: boolean
+  e: MouseEvent
 ) => {
   // no perspective in case of mouse over or mobile view
   const center = [Number(window.innerWidth)/2, Number(window.innerHeight)/2];
-  const maxAngleX = 1.5 * 10, maxAngleY = 1.5 * -10;
-
-
-  if (halt || Number(window.innerWidth) < 768) {
-    if (divRef.current) divRef.current.style.transform = `none`;
-    return
-  }
-
-  const newZ = e.clientY - center[1] > 0 ? '6' : '6';
+  
 
 
   const stumbling = [
-    ((Number(e.clientX) - center[0]) / center[0]) * maxAngleX, 
-    ((Number(e.clientY) - center[1]) / center[1]) * maxAngleY
+    ((Number(e.clientX) - center[0]) / center[0]), 
+    ((Number(e.clientY) - center[1]) / center[1])
   ]
 
   // setMousePos(stumbling);
-  const transform = `rotateX(${stumbling[1]}deg) rotateY(${stumbling[0]}deg)`;
-  
-  if (divRef.current) {
-    divRef.current.style.transform = transform;
-    divRef.current.style.zIndex = newZ;
-  }
+
+  return stumbling;
   
 }
 
@@ -161,7 +147,26 @@ export const MirroredImage = ({
   useEffect(() => {
 
     window.addEventListener('mousemove', (event) => {
-      showMousePos(event, divRef, halt)
+      const maxAngleX = 1.5 * 10, maxAngleY = 1.5 * -10;
+      const stumbling = showMousePos(event) || [0,0]
+
+      if (halt || Number(window.innerWidth) < 768) {
+        if (divRef.current) {
+          divRef.current.style.transform = `none`;
+        }
+        return
+      }
+
+      const transform = `rotateX(${stumbling[1] * maxAngleY}deg) rotateY(${stumbling[0] * maxAngleX}deg)`;
+
+      const boxShadow = `${-30 * stumbling[0]}px 30px 100px rgba(100,100,150, 0.9)`
+  
+      if (divRef.current) {
+        divRef.current.style.transform = transform;
+        divRef.current.style.boxShadow = boxShadow;
+        divRef.current.style.zIndex = '6';
+      }
+
     });
 
   }, [halt])
@@ -291,6 +296,7 @@ export const MyLinearGradient = ({
     borderRadius?: string,
 }) => {
 
+    const shadowDivRef: RefObject<HTMLDivElement> = useRef(null);
     const [resPadding, setResPadding] = useState(padding);
     
     
@@ -298,6 +304,23 @@ export const MyLinearGradient = ({
       if (Number(window.innerWidth) < 768) {
         setResPadding('5');
       }
+
+      window.addEventListener('mousemove', (event) => {
+        const stumbling = showMousePos(event) || [0,0]
+
+        if (Number(window.innerWidth) < 768) {
+          if (shadowDivRef.current) shadowDivRef.current.style.boxShadow = '130px 30px 60px rgba(100,100,150, .4)';
+          return
+        }
+  
+        const boxShadow = `${-50 * stumbling[0]}px 30px 60px rgba(100,100,150, .5)`;
+    
+        if (shadowDivRef.current) {
+          shadowDivRef.current.style.boxShadow = boxShadow;
+        }
+  
+      });
+
     }, []);
 
     
@@ -305,13 +328,13 @@ export const MyLinearGradient = ({
     return (
     
     <div
+      ref={shadowDivRef}
       draggable={false}
       style={{
         background: `linear-gradient(to right, ${edgeColor}, ${color}, ${color}, ${color}, ${color}, ${edgeColor})`, 
         border: `0.1px solid ${stroke}`,
         padding: `2% ${resPadding}%`,
         borderRadius: borderRadius || '10px',
-        boxShadow: '30px 30px 60px rgba(100,100,150, .4)',
         width: 'fit-content',
         minWidth: '70%',
         margin: `auto`
