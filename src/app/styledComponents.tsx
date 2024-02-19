@@ -164,7 +164,7 @@ export const MirroredImage = ({
       showMousePos(event, divRef, halt)
     });
 
-  }, [])
+  }, [halt])
   
   
   
@@ -292,13 +292,11 @@ export const MyLinearGradient = ({
 }) => {
 
     const [resPadding, setResPadding] = useState(padding);
-    const [resStroke, setResStroke] = useState(stroke);
     
     
     useEffect(() => {
       if (Number(window.innerWidth) < 768) {
         setResPadding('5');
-        setResStroke('none');
       }
     }, []);
 
