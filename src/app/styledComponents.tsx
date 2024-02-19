@@ -164,7 +164,7 @@ export const MirroredImage = ({
       showMousePos(event, divRef, halt)
     });
 
-  }, [])
+  }, [halt])
   
   
   
@@ -181,7 +181,6 @@ export const MirroredImage = ({
       draggable={false}
   > 
     
-    <Reflection angle={100} sideColor='skyblue' borderRadius="20%" position="absolute">
       <div
         ref={divRef}
         onMouseEnter={removePerspective}
@@ -199,8 +198,10 @@ export const MirroredImage = ({
         }}
       >
         
+        <Reflection angle={100} sideColor='skyblue' borderRadius="20%">
+          <div style={{minWidth: '100%', minHeight: '100%'}}></div>
+        </Reflection>
       </div>
-    </Reflection>
     
 
     
@@ -279,35 +280,37 @@ export const MyLinearGradient = ({
     color,
     edgeColor,
     stroke,
-
+    borderRadius,
     padding
 }:{
     children: React.ReactNode,
     color: string,
     edgeColor: string,
-    stroke: string,
-    padding: string
+    stroke?: string,
+    padding: string,
+    borderRadius?: string,
 }) => {
 
     const [resPadding, setResPadding] = useState(padding);
-    const [resStroke, setResStroke] = useState(stroke);
     
     
     useEffect(() => {
       if (Number(window.innerWidth) < 768) {
         setResPadding('5');
-        setResStroke('none');
       }
     }, []);
+
+    
 
     return (
     
     <div
+      draggable={false}
       style={{
         background: `linear-gradient(to right, ${edgeColor}, ${color}, ${color}, ${color}, ${color}, ${edgeColor})`, 
-        border: `1px solid ${resStroke}`,
+        border: `0.1px solid ${stroke}`,
         padding: `2% ${resPadding}%`,
-        borderRadius: '10px',
+        borderRadius: borderRadius || '10px',
         boxShadow: '30px 30px 60px rgba(100,100,150, .4)',
         width: 'fit-content',
         minWidth: '70%',
@@ -452,9 +455,7 @@ export const MyForm = ({
       <br/>
       <br/>
 
-      <Reflection angle={100} color="white" sideColor="black" borderRadius="5px">
-        <MyFormBtn text="SEND" />
-      </Reflection>
+      <MyFormBtn text="SEND" />
 
     </form>
   )
@@ -470,6 +471,7 @@ export const MyFormBtn = ({
   const handleMouseOver = (e: any) => {
     e.target.style.background = `orange url(${typo1.src}) no-repeat`;
     e.target.style.backgroundBlendMode = 'multiply';
+    e.target.style.borderRadius = '7px';
   }
 
   const handleMouseOut = (e: any) => {
@@ -483,20 +485,25 @@ export const MyFormBtn = ({
   }
 
   return <button name="button"
-  style={{
-    background: `skyblue url(${typo1.src}) no-repeat`,
-    backgroundBlendMode: 'multiply',
-    color: 'rgba(0,0,0, 0.5)',
-  }}
-  onMouseOver={handleMouseOver}
-  onMouseOut={handleMouseOut}
-  onMouseDown={(e) => {
-    handleMouseDown(e);
-    if (callback) callback();
-  }}
-  className="
-  font-bold text-xl p-1 px-6 rounded border border-amber-200">
-    {text}
+    style={{
+      background: `skyblue url(${typo1.src}) no-repeat`,
+      backgroundBlendMode: 'multiply',
+      color: 'rgba(0,0,0, 0.5)',
+      borderRadius: '7px'
+    }}
+    onMouseOver={handleMouseOver}
+    onMouseOut={handleMouseOut}
+    onMouseDown={(e) => {
+      handleMouseDown(e);
+      if (callback) callback();
+    }}
+    className="border border-amber-200"
+  >
+    <Reflection angle={100} color="white" sideColor="black" borderRadius="7px">
+      <div className="text-neutral-600 font-bold text-xl p-1 px-6"
+        style={{borderRadius: '7px'}}
+      >{text}</div>
+    </Reflection>
   </button>
 }
 

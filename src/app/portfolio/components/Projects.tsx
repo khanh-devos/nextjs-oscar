@@ -59,14 +59,14 @@ const Projects = () => {
               
           </button>
 
-          <div className="text-center w-full mt-6 flex gap-1" draggable={true}
+          <div className="text-center w-full mt-6 flex gap-1" draggable={false}
             style={{
               minWidth: '100%',
               padding: '0 10%'
             }}
           >
             
-          <Reflection angle={100} color="lightgreen" sideColor="darkgreen" borderRadius='5px'>
+          <Reflection border={true} borderColor="skyblue" borderShiningColor='orange' borderWidth={6} angle={100} color="lightgreen" sideColor="darkgreen" borderRadius='10px' borderPathScale={2} borderRadiusRatio={1.4}>
             <MyLinearGradient stroke="white" color="lightgreen" 
               edgeColor="rgba(0,0,0,0)" padding="5">
               <p className="text-black" >{project.description}
