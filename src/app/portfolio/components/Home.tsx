@@ -26,7 +26,7 @@ const Home = () => {
         <MyParagraph2>- Written with Nextjs & Typescript.</MyParagraph2>
         <MyParagraph2>- 3 features added in &quot;Projects&quot; : sliding, fading, and flying.</MyParagraph2>
         
-        <MyParagraph2>- Special &quot;Reflective&quot; feature implemented by : <MyLink pathname="https://github.com/khanh-devos/react-reflection/tree/dev" title="my own react-reflection package" />
+        <MyParagraph2>- Special &quot;Reflective&quot; feature implemented by : <MyLink pathname="https://github.com/khanh-devos/react-reflection/pkgs/npm/react-reflection" title="my react-reflection package" />
         </MyParagraph2>
 
 
