@@ -9,7 +9,7 @@ const Home = () => {
   return (
   <div className={`mt-20 px-1 md:px-20`}>
     
-    <Reflection borderShiningColor="#FC6736" border={true} borderWidth={9} borderColor="green" borderRadiusRatio={1.5} borderPathScale={2} angle={100} color="skyblue" sideColor="black" borderRadius="20px">
+    <Reflection borderShiningColor="#FC6736" border={true} borderWidth={9} borderColor="green" borderRadiusRatio={1.5} borderPathScale={2.5} angle={100} color="skyblue" sideColor="black" borderRadius="20px">
       <MyLinearGradient 
         stroke="lavender"
         color="white"
