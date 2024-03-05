@@ -8,23 +8,31 @@ import typo1 from "../imgs/portfolio/typo1.png"
 import { Reflection } from "@khanh-devos/react-reflection";
 
 
-export const MyHeader1 = ({text} : {text: string}) => {
+export const MyHeader1 = ({
+  children
+} : {
+  children: string
+}) => {
     return <h1 className="
     bg-gradient-to-r from-orange-600 via-amber-600 to-amber-400  inline-block text-transparent bg-clip-text
     text-3xl font-bold pt-2 pb-2"
     >
-        {text}
+        {children}
     </h1>
     
 }
 
-export const MyHeader2 = ({text} : {text: string}) => {
+export const MyHeader2 = ({
+  children
+} : {
+  children: string
+}) => {
     return <div className="w-full text-center">
       <h3 className="
     bg-gradient-to-r from-orange-600 via-amber-600 to-amber-400  inline-block text-transparent bg-clip-text
     text-2xl text-center pt-2 pb-2 font-bold
     ">
-        {text}
+        {children}
     </h3></div>
 }
 

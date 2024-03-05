@@ -9,7 +9,7 @@ const Contact = () => {
       <Reflection border={true} borderWidth={9} borderColor="skyblue" borderRadiusRatio={1} borderPathScale={2.5} light={false} borderRadius="20px">
         <MyLinearGradient stroke="lavender" color="white" 
           edgeColor="rgba(0,0,0,0)" padding="3" >
-          <MyHeader2 text="CONTACT" />
+          <MyHeader2>CONTACT</MyHeader2>
 
           <MyForm>
         

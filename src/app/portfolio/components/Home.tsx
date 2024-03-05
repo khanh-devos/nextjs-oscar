@@ -18,7 +18,7 @@ const Home = () => {
         borderRadius='20px'
       >
 
-        <MyHeader1 text="Hi, I am Khanh." />
+        <MyHeader1>Hi, I am Khanh.</MyHeader1>
       
         <MyParagraph2>I am a remote full-stack web developer || a motorbiker || an e-biker. A cool wind while riding is a piece of my favor. I enjoy coding either FE (React & Nextjs, TS & JS) or BE (Rails on Ruby, Python-AI).</MyParagraph2>
 
